@@ -7,7 +7,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/ISC_search.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
 
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
@@ -25,11 +25,12 @@
 
 
         <div class="list-group list-group-flush">
-            <h3>Hello User,</h3>
-            <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users"></i>Search Immigrants</a>
+            <h3 class="">Hello User,</h3>
+            <a href="#" class="text-light list-group-item list-group-item-action bg-secondary"><i class="fas fa-users"></i>Search Immigrants</a>
             <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-user-plus"></i>Add Immigrant</a>
             <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-user-graduate"></i>Add Educational Party</a>
             <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-id-badge"></i>Add ISC Employee</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-sign-out-alt"></i>Logout</a>
 
         </div>
     </div>
@@ -39,7 +40,13 @@
     <div id="page-content-wrapper">
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+            <h3>Search</h3>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              </div>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

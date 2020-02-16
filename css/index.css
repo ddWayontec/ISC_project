@@ -17,8 +17,9 @@ body {
 }
 
 #sidebar-wrapper h3{
-    padding: 1rem;
-    font-size: 1.5rem;
+    padding: 0.7rem 1rem;
+    font-size: 1.2rem;
+    color: #495057;
 }
 
 #sidebar-wrapper {
