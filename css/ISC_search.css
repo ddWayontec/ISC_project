@@ -8,18 +8,30 @@ body {
 }
 
 #img-logo {
-    max-height: 100%;
-    max-width: 100%;
+
+    max-width: 75%;
     padding: 0.75rem;
+    display: flex;
+    align-self: center;
+
+}
+
+#sidebar-wrapper h3{
+    padding: 1rem;
+    font-size: 1.5rem;
 }
 
 #sidebar-wrapper {
     min-height: 100vh;
-    margin-left: -15rem;
+    max-width: 380px;
+    margin-left: -8rem;
     -webkit-transition: margin .25s ease-out;
     -moz-transition: margin .25s ease-out;
     -o-transition: margin .25s ease-out;
     transition: margin .25s ease-out;
+    display: flex;
+    flex-direction: column;
+
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -28,7 +40,11 @@ body {
 }
 
 #sidebar-wrapper .list-group {
-    width: 15rem;
+
+}
+
+a i {
+    padding: 0.5rem;
 }
 
 #logo-wrapper {
@@ -54,6 +70,6 @@ body {
     }
 
     #wrapper.toggled #sidebar-wrapper {
-        margin-left: -15rem;
+        margin-left: -800px;
     }
 }
