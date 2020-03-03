@@ -7,6 +7,30 @@ body {
     overflow-x: hidden;
 }
 
+.navbar {
+    background-color: #E22A2A;
+    color: white;
+}
+
+.navbar-content-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+}
+
+.navbar-content-wrapper h4 {
+    flex: 1;
+}
+
+.navbar-search-container {
+    flex: 4;
+}
+
+.main-content-container {
+    margin: 20px;
+}
+
 #img-logo {
 
     max-width: 75%;
