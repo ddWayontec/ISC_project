@@ -62,12 +62,16 @@ export const Sidebar = ({ history, items }) => {
         </div>
         <List>
           {items.map(item => (
-            <ListItem button onClick={() => history.push(item.route)}>
+            <ListItem
+              button
+              onClick={() => history.push(item.route)}
+              key={item.key}
+            >
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItem>
           ))}
-          <ListItem button onClick={() => history.push("/login")}>
+          <ListItem button onClick={() => history.push("/login")} key="logout">
             <ListItemIcon>
               <ExitToAppIcon />
             </ListItemIcon>
