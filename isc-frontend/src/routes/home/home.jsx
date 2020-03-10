@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { Login } from "../login";
 import { AppContainer, Sidebar } from "../../components";
-import { AuthConsumer } from "../../contexts";
+import { AuthContext } from "../../contexts";
 
 import PeopleIcon from "@material-ui/icons/People";
 import AddIcon from "@material-ui/icons/Add";
@@ -43,19 +43,16 @@ const sidebarItems = {
 };
 
 export const Home = props => {
+  const { user } = useContext(AuthContext);
   return (
-    <AuthConsumer>
-      {({ user }) => (
-        <AppContainer>
-          <Sidebar
-            history={props.history}
-            items={sidebarItems[user.role] ? sidebarItems[user.role] : []}
-          />
-          <Switch>
-            <Route path="/list-all-immigrants" component={Login} />
-          </Switch>
-        </AppContainer>
-      )}
-    </AuthConsumer>
+    <AppContainer>
+      <Sidebar
+        history={props.history}
+        items={sidebarItems[user.role] ? sidebarItems[user.role] : []}
+      />
+      <Switch>
+        <Route path="/list-all-immigrants" component={Login} />
+      </Switch>
+    </AppContainer>
   );
 };
