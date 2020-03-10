@@ -4,14 +4,14 @@ import { AuthProvider } from "../../contexts";
 
 export const Auth = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
-  const [user, setUser] = useState({ role: "visitor" });
+  const [user, setUser] = useState({ role: "immigrant" });
   const [accessToken, setAccessToken] = useState("");
 
   const initiateLogin = () => {};
 
   const logout = () => {
     setAuthenticated(false);
-    setUser({ role: "visitor" });
+    setUser({ role: "immigrant" });
     setAccessToken("");
   };
 

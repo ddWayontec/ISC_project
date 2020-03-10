@@ -1,58 +1,26 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import { Login } from "../login";
-import { AppContainer, Sidebar } from "../../components";
-import { AuthContext } from "../../contexts";
+import { AppContainer } from "../../components";
+import { makeStyles } from "@material-ui/core";
 
-import PeopleIcon from "@material-ui/icons/People";
-import AddIcon from "@material-ui/icons/Add";
-import ViewModuleIcon from "@material-ui/icons/ViewModule";
+const useStyles = makeStyles(() => ({
+  text: {
+    fontSize: "3em",
+    textAlign: "center"
+  },
+  root: {
+    width: "100%",
+    backgroundColor: "yellow"
+  }
+}));
 
-import { Switch, Route } from "react-router-dom";
-
-const sidebarItems = {
-  isc_employee: [
-    {
-      text: "List all immigrants",
-      icon: <PeopleIcon />,
-      route: "/list-all-immigrants",
-      key: "listAllImmigrants"
-    },
-    { text: "Add immigrant", icon: <AddIcon />, route: "/add-immigrant" },
-    {
-      text: "Add service provider",
-      icon: <AddIcon />,
-      route: "/add-service-provider",
-      key: "addServiceProvider"
-    },
-    {
-      text: "Add ISC employee",
-      icon: <AddIcon />,
-      route: "/add-isc-employee",
-      key: "addIscEmployee"
-    }
-  ],
-  visitor: [
-    {
-      text: "My Modules",
-      icon: <ViewModuleIcon />,
-      route: "/view-modules",
-      key: "viewModules"
-    }
-  ]
-};
-
-export const Home = props => {
-  const { user } = useContext(AuthContext);
+export const Home = () => {
+  const classes = useStyles();
   return (
     <AppContainer>
-      <Sidebar
-        history={props.history}
-        items={sidebarItems[user.role] ? sidebarItems[user.role] : []}
-      />
-      <Switch>
-        <Route path="/list-all-immigrants" component={Login} />
-      </Switch>
+      <div className={classes.root}>
+        <p className={classes.text}>HOME</p>
+      </div>
     </AppContainer>
   );
 };

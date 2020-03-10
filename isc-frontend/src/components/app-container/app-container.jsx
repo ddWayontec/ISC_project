@@ -1,5 +1,28 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core";
 
-export const AppContainer = ({ children }) => {
-  return <div>{children}</div>;
+const useStyles = makeStyles(() => ({
+  root: {
+    display: "flex",
+    flexDirection: "row"
+  },
+  sidebar: {
+    alignSelf: "flex-start"
+  },
+  content: {
+    flexGrow: 2
+  }
+}));
+
+export const AppContainer = ({ sidebar, children }) => {
+  const classes = useStyles();
+
+  return sidebar ? (
+    <div className={classes.root}>
+      <div className={classes.sidebar}>{sidebar}</div>
+      <div className={classes.content}>{children}</div>
+    </div>
+  ) : (
+    <div>{children}</div>
+  );
 };

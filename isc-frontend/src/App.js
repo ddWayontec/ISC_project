@@ -4,12 +4,17 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 
 import { Home, Login } from "./routes";
+import { Immigrant } from "./routes/immigrant";
+import { ISC } from "./routes/isc";
 
 function App() {
   return (
     <>
       <Switch>
         <Route exact path="/login" component={Login} />
+        <Route path="/immigrant" component={Immigrant} />
+        <Route path="/isc" component={ISC} />
+
         <Route component={Home} />
       </Switch>
     </>
