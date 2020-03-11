@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 
 import { usePermissions } from "../hooks";
@@ -8,17 +8,21 @@ import { ForbiddenAccessCity } from "../components";
 import { ForbiddenAccessGandalf } from "../components/forbidden-access";
 
 const ProtectedRoute = ({ permission = NO_PERMISSIONS, ...props }) => {
-  const { authenticated, user } = useContext(AuthContext);
+  const [forbiddenPage, setForbiddenPage] = useState(null);
 
+  const { authenticated, user } = useContext(AuthContext);
   const allowed = usePermissions(user.role, permission);
 
-  // show a random 403 error page if they try and access a route they aren't supposed to
-  const forbiddenPage =
-    Math.floor(Math.random() * 2) === 1 ? (
-      <ForbiddenAccessCity />
-    ) : (
-      <ForbiddenAccessGandalf />
+  useEffect(() => {
+    setForbiddenPage(
+      // show a random 403 error page if they try and access a route they aren't supposed to
+      Math.floor(Math.random() * 2) === 1 ? (
+        <ForbiddenAccessCity />
+      ) : (
+        <ForbiddenAccessGandalf />
+      )
     );
+  }, []);
 
   return authenticated && allowed ? <Route {...props} /> : forbiddenPage;
 };
