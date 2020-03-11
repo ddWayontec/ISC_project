@@ -20,9 +20,9 @@ export const Auth = ({ children }) => {
 
   const setSession = data => {
     const user = {
-      id: data.sub,
+      id: data.id,
       email: data.email,
-      role: "immigrant"
+      role: data.role
     };
 
     setAuthenticated(true);
