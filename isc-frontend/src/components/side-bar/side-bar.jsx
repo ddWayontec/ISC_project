@@ -40,6 +40,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const Sidebar = ({ history, items }) => {
+  console.log(`HISTORY: ${JSON.stringify(history)}`);
+
   const classes = useStyles();
 
   return (

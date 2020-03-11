@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 
+import { ROLES } from "../../utils/constants";
 import { AuthProvider } from "../../contexts";
 
 export const Auth = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
-  const [user, setUser] = useState({ role: "immigrant" });
+  const [user, setUser] = useState({ role: ROLES.VISITOR });
   const [accessToken, setAccessToken] = useState("");
 
   const initiateLogin = () => {};
 
   const logout = () => {
     setAuthenticated(false);
-    setUser({ role: "immigrant" });
+    setUser({ role: ROLES.VISITOR });
     setAccessToken("");
   };
 
@@ -21,7 +22,7 @@ export const Auth = ({ children }) => {
     const user = {
       id: data.sub,
       email: data.email,
-      role: "visitor"
+      role: "immigrant"
     };
 
     setAuthenticated(true);
