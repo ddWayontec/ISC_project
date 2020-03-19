@@ -1,16 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 
 import { usePermissions } from "../hooks";
-import { AuthContext } from "../contexts/auth";
-import { NO_PERMISSIONS } from "./constants";
+import { NO_PERMISSIONS, ROLES } from "./constants";
 import { ForbiddenAccessCity } from "../components";
 import { ForbiddenAccessGandalf } from "../components/forbidden-access";
+
+import { useSelector } from "react-redux";
 
 const ProtectedRoute = ({ permission = NO_PERMISSIONS, ...props }) => {
   const [forbiddenPage, setForbiddenPage] = useState(null);
 
-  const { authenticated, user } = useContext(AuthContext);
+  const auth = useSelector(state => state.auth);
+
+  // Temp testing
+  const authenticated = auth.user.authenticated;
+  const user = {
+    role: ROLES.IMMIGRANT
+  };
+
   const allowed = usePermissions(user.role, permission);
 
   useEffect(() => {

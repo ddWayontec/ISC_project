@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Avatar,
   Button,
@@ -10,6 +10,8 @@ import {
   makeStyles
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { useDispatch } from "react-redux";
+import { setAuthenticated } from "../../redux/actions/auth/auth";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -30,8 +32,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Login = () => {
+export const Login = ({ handleAuthentication }) => {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setAuthenticated({ user: { authenticated: true } }));
+  }, [dispatch]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -72,6 +79,7 @@ export const Login = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleAuthentication}
           >
             Sign In
           </Button>

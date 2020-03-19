@@ -1,49 +1,34 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import "./App.css";
 
 import { Route, Switch } from "react-router-dom";
 
-import { Home, Login } from "./routes";
+import { Login } from "./routes";
 import { Immigrant } from "./routes/immigrant";
 import { ISC } from "./routes/isc";
 import ProtectedRoute from "./utils/protected-route";
-import { ROLES } from "./utils/constants";
-import { AuthContext } from "./contexts/auth";
+import { useSelector } from "react-redux";
 
 function App() {
-  // TEST -- fake login --
-  // set person to master when they go home
-  const { setSession } = useContext(AuthContext);
-  useEffect(
-    () =>
-      setSession({
-        id: "fake id",
-        email: "fake email",
-        accessToken: "fake accessToken",
-        role: ROLES.IMMIGRANT
-      }),
-    []
-  );
-  // TEST -- fake login --
+  // Testing to check Redux is working
+  console.log(useSelector(state => state.auth));
 
   return (
-    <>
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <ProtectedRoute
-          permission="immigrant-pages:visit"
-          path="/immigrant"
-          component={Immigrant}
-        />
-        <ProtectedRoute
-          permission="isc-pages:visit"
-          path="/isc"
-          component={ISC}
-        />
+    <Switch>
+      <Route exact path="/login" component={Login} />
+      <ProtectedRoute
+        path="/immigrant"
+        permission="immigrant-pages:visit"
+        component={Immigrant}
+      />
+      <ProtectedRoute
+        path="/isc"
+        permission="isc-pages:visit"
+        component={ISC}
+      />
 
-        <Route component={Home} />
-      </Switch>
-    </>
+      <Route component={Login} />
+    </Switch>
   );
 }
 
