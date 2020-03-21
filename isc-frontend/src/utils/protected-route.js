@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 
-import { usePermissions } from "../hooks";
+import { usePermissions, useSession } from "../hooks";
 import { NO_PERMISSIONS, ROLES } from "./constants";
 import { ForbiddenAccessCity } from "../components";
 import { ForbiddenAccessGandalf } from "../components/forbidden-access";
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 const ProtectedRoute = ({ permission = NO_PERMISSIONS, ...props }) => {
   const [forbiddenPage, setForbiddenPage] = useState(null);
+  useSession();
 
   const auth = useSelector(state => state.auth);
 
