@@ -14,6 +14,8 @@ const ProtectedRoute = ({ permission = NO_PERMISSIONS, ...props }) => {
   const allowed = usePermissions(user.role, permission);
   const location = useLocation().pathname;
 
+  console.log(`Authenticated: ${authenticated} allowed: ${allowed}`);
+
   return authenticated && allowed ? (
     <Route {...props} />
   ) : (

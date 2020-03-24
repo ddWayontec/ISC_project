@@ -1,6 +1,7 @@
 import {
   Avatar,
   Button,
+  CircularProgress,
   Container,
   CssBaseline,
   Link,
@@ -9,9 +10,13 @@ import {
   Typography
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import React, { useContext, useEffect, useState } from "react";
+import isEmpty from "lodash/isEmpty";
+import React, { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
+import { Redirect } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/auth";
+import { ROLES } from "../../utils/constants";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -29,19 +34,43 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  loading: {
+    marginTop: "30%"
   }
 }));
 
+const userRedirectMap = {
+  [ROLES.IMMIGRANT]: "/immigrant",
+  [ROLES.ISC_EMPLOYEE]: "/isc",
+  [ROLES.VISITOR]: "/login"
+};
+
 export const Login = ({ redirectPath }) => {
   const classes = useStyles();
-  const { handleAuthentication } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { initiateLogin, user } = useContext(AuthContext);
+  const { register, handleSubmit, errors } = useForm();
 
-  const emailChangeHandler = e => {
-    //do email validation?
-    setEmail(e.target.value);
+  const onSubmit = async data => {
+    setLoading(true);
+    const { email, password } = data;
+    console.log(`form submitted: ${JSON.stringify(data)}`);
+    const loginResult = await initiateLogin(email, password);
+    console.log(`Login result: ${JSON.stringify(loginResult)}`);
+
+    if (loginResult && !isEmpty(loginResult)) {
+      if (!loginResult.authenticated) {
+        setLoading(false);
+        return;
+      }
+
+      setRedirect(true);
+    }
+
+    setLoading(false);
   };
   console.log(`redirect path: ${redirectPath}`);
 
@@ -55,44 +84,62 @@ export const Login = ({ redirectPath }) => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={handleAuthentication}
-          >
-            Sign In
-          </Button>
-          <Link href="mailto:info@immigrantservicescalgary.ca" variant="body2">
-            Forgot password or don't have an account?
-          </Link>
-        </form>
+        {!loading ? (
+          <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              inputRef={register({
+                required: true,
+                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+              })}
+            />
+            {errors.email && <span>This field must be a valid email.</span>}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              inputRef={register}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              // onClick={handleAuthentication}
+            >
+              Sign In
+            </Button>
+            <Link
+              href="mailto:info@immigrantservicescalgary.ca"
+              variant="body2"
+            >
+              Forgot password or don't have an account?
+            </Link>
+          </form>
+        ) : (
+          <CircularProgress className={classes.loading} />
+        )}
       </div>
+      {redirect ? (
+        <Redirect
+          to={redirectPath ? redirectPath : userRedirectMap[user.role]}
+        />
+      ) : null}
     </Container>
   );
 };

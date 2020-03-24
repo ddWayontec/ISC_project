@@ -4,17 +4,14 @@ import React, { useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { AppContainer } from "./components/app-container";
-import { AuthContext } from "./contexts/auth";
-import { Login } from "./routes";
-import { Immigrant } from "./routes/immigrant";
-import { ISC } from "./routes/isc";
+import { Immigrant, ISC, Login, Logout } from "./routes";
 import ProtectedRoute from "./utils/protected-route";
 
 function App() {
-  const { handleAuthentication } = useContext(AuthContext);
   return (
     <AppContainer>
       <Switch>
+        <Route exact path="/logout" component={Logout} />
         <Route exact path="/login" component={Login} />
         <ProtectedRoute
           path="/immigrant"

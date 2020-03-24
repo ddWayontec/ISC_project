@@ -7,11 +7,11 @@
     }
   },
   "env": { "es6": true },
-  "plugins": ["simple-import-sort", "prettier", "import", "unused-imports"],
+  "plugins": ["simple-import-sort", "import", "unused-imports"],
   "rules": {
+    "arrow-parens": "error",
     "simple-import-sort/sort": "error",
     "sort-imports": "off",
-    "prettier/prettier": "error",
     "import/first": "error",
     "import/newline-after-import": "error",
     "import/no-duplicates": "error"
@@ -21,6 +21,7 @@
       "files": "server/**/*.js",
       "env": { "node": true },
       "rules": {
+        "prettier/prettier/arrow-parens": "off",
         "simple-import-sort/sort": "off",
         "import/order": ["error", { "newlines-between": "always" }],
         "no-unused-vars": 2,

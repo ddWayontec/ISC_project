@@ -21,7 +21,7 @@ export const useSession = () => {
         return;
       }
 
-      handleAuthentication();
+      handleAuthentication({ ...user, role: user.role });
     }
-  });
+  }, [handleAuthentication, route, lastRoute, user]);
 };

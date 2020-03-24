@@ -69,7 +69,7 @@ export const Sidebar = ({ history, items }) => {
               <ListItemText primary={item.text} />
             </ListItem>
           ))}
-          <ListItem button onClick={() => history.push("/login")} key="logout">
+          <ListItem button onClick={() => history.push("/logout")} key="logout">
             <ListItemIcon>
               <ExitToAppIcon />
             </ListItemIcon>
