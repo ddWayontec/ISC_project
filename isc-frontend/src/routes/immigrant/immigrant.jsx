@@ -1,13 +1,12 @@
 import React from "react";
-
 import { Route, Switch } from "react-router-dom";
-import { Home } from "./home";
+
 import { AppContainer } from "../../components/app-container";
 import { Sidebar } from "../../components/side-bar";
-
 import { useSidebarList } from "../../hooks";
-import { ViewModules } from "./view-modules";
 import { ROLES } from "../../utils/constants";
+import { Home } from "./home";
+import { ViewModules } from "./view-modules";
 
 export const Immigrant = ({ history }) => {
   // Temp testing using Redux

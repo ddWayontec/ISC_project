@@ -1,7 +1,7 @@
+import AddIcon from "@material-ui/icons/Add";
+import PeopleIcon from "@material-ui/icons/People";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import React from "react";
-import PeopleIcon from "@material-ui/icons/People";
-import AddIcon from "@material-ui/icons/Add";
 
 const sidebarItems = {
   isc_employee: [

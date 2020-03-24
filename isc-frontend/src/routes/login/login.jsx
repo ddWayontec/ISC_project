@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
 import {
   Avatar,
   Button,
-  CssBaseline,
-  TextField,
-  Link,
-  Typography,
   Container,
-  makeStyles
+  CssBaseline,
+  Link,
+  makeStyles,
+  TextField,
+  Typography
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { useDispatch } from "react-redux";
-import { setAuthenticated } from "../../redux/actions/auth/auth";
+import React, { useContext, useEffect, useState } from "react";
+
+import { AuthContext } from "../../contexts/auth";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -32,13 +32,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Login = ({ handleAuthentication }) => {
+export const Login = ({ redirectPath }) => {
   const classes = useStyles();
+  const { handleAuthentication } = useContext(AuthContext);
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(setAuthenticated({ user: { authenticated: true } }));
-  }, [dispatch]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const emailChangeHandler = e => {
+    //do email validation?
+    setEmail(e.target.value);
+  };
+  console.log(`redirect path: ${redirectPath}`);
 
   return (
     <Container component="main" maxWidth="xs">

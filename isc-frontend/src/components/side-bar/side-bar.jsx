@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
   Drawer,
   List,
@@ -8,8 +6,8 @@ import {
   ListItemText,
   makeStyles
 } from "@material-ui/core";
-
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import React from "react";
 
 const drawerWidth = 240;
 

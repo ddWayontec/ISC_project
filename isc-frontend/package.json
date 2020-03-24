@@ -12,6 +12,7 @@
     "lodash": "^4.17.15",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-hook-form": "^5.1.3",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
@@ -23,7 +24,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pretty": "pretty-quick"
+    "pretty": "pretty-quick",
+    "lint": " eslint \"./**/*.{js,jsx}\"",
+    "fix-lint": " eslint --fix \"./**/*.{js,jsx}\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,10 +45,14 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "eslint --fix \"./**/*.{js,jsx}\" && pretty-quick --staged"
     }
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-simple-import-sort": "^5.0.2",
+    "eslint-plugin-unused-imports": "^0.1.2",
     "husky": "^4.2.3",
     "prettier": "1.19.1",
     "pretty-quick": "^2.0.1"

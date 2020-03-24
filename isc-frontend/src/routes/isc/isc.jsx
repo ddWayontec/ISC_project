@@ -1,12 +1,11 @@
 import React from "react";
-
 import { Route, Switch } from "react-router-dom";
-import { Home } from "./home";
+
 import { AppContainer } from "../../components/app-container";
 import { Sidebar } from "../../components/side-bar";
-
 import { useSidebarList } from "../../hooks";
 import { ROLES } from "../../utils/constants";
+import { Home } from "./home";
 
 export const ISC = ({ history }) => {
   // Temp testing, use redux instead
