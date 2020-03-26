@@ -1,17 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { AppContainer } from "../../components/app-container";
 import { Sidebar } from "../../components/side-bar";
+import { AuthContext } from "../../contexts/auth";
 import { useSidebarList } from "../../hooks";
 import { ROLES } from "../../utils/constants";
 import { Home } from "./home";
 
 export const ISC = ({ history }) => {
-  // Temp testing, use redux instead
-  const user = {
-    role: ROLES.ISC_EMPLOYEE
-  };
+  const { user } = useContext(AuthContext);
   const sidebarItems = useSidebarList(user.role);
 
   const sidebar = <Sidebar items={sidebarItems} history={history} />;

@@ -13,7 +13,9 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    width: drawerWidth
+    // marginRight: -7
   },
   iscLogo: {
     width: "98%",
@@ -22,9 +24,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: "auto"
   },
   drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    backgroundColor: theme.status.danger
+    width: drawerWidth
   },
   drawerPaper: {
     width: drawerWidth

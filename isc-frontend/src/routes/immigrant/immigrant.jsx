@@ -1,18 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { AppContainer } from "../../components/app-container";
+import { ContentWrapper } from "../../components/content-wrapper";
 import { Sidebar } from "../../components/side-bar";
+import { AuthContext } from "../../contexts/auth";
 import { useSidebarList } from "../../hooks";
-import { ROLES } from "../../utils/constants";
-import { Home } from "./home";
+import { Profile } from "./profile";
 import { ViewModules } from "./view-modules";
 
 export const Immigrant = ({ history }) => {
-  // Temp testing using Redux
-  const user = {
-    role: ROLES.IMMIGRANT
-  };
+  const { user } = useContext(AuthContext);
   const sidebarItems = useSidebarList(user.role);
 
   const sidebar = <Sidebar items={sidebarItems} history={history} />;
@@ -20,8 +18,9 @@ export const Immigrant = ({ history }) => {
   return (
     <AppContainer sidebar={sidebar}>
       <Switch>
-        <Route exact path="/immigrant" component={Home} />
+        <Route exact path="/immigrant" component={ViewModules} />
         <Route exact path="/immigrant/view-modules" component={ViewModules} />
+        <Route exact path="/immigrant/profile" component={Profile} />
       </Switch>
     </AppContainer>
   );

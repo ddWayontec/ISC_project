@@ -1,5 +1,6 @@
 import AddIcon from "@material-ui/icons/Add";
 import PeopleIcon from "@material-ui/icons/People";
+import Person from "@material-ui/icons/Person";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import React from "react";
 
@@ -23,6 +24,12 @@ const sidebarItems = {
       icon: <AddIcon />,
       route: "/isc/add-isc-employee",
       key: "addIscEmployee"
+    },
+    {
+      text: "My Profile",
+      icon: <Person />,
+      route: "/isc/profile",
+      key: "iscProfile"
     }
   ],
   immigrant: [
@@ -31,6 +38,12 @@ const sidebarItems = {
       icon: <ViewModuleIcon />,
       route: "/immigrant/view-modules",
       key: "viewModules"
+    },
+    {
+      text: "My Profile",
+      icon: <Person />,
+      route: "/immigrant/profile",
+      key: "immigrantProfile"
     }
   ]
 };

@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ spacing }) => ({
   root: {
     display: "flex",
     flexDirection: "row"
@@ -10,7 +10,8 @@ const useStyles = makeStyles(() => ({
     alignSelf: "flex-start"
   },
   content: {
-    flexGrow: 2
+    flexGrow: 2,
+    margin: spacing(-1, -1, -1, -1)
   }
 }));
 

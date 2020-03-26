@@ -1,6 +1,4 @@
-import "./App.css";
-
-import React, { useContext } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { AppContainer } from "./components/app-container";
