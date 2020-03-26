@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import { AppContainer } from "../../components/app-container";
-import { ContentWrapper } from "../../components/content-wrapper";
-import { Sidebar } from "../../components/side-bar";
+import { AppContainer, Sidebar } from "../../components";
 import { AuthContext } from "../../contexts/auth";
 import { useSidebarList } from "../../hooks";
 import { Profile } from "./profile";

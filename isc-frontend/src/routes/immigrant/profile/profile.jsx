@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React, { useContext } from "react";
-import { ContentWrapper } from "../../../components/content-wrapper";
-import { Header } from "../../../components/header";
+
+import { ContentWrapper, Header } from "../../../components";
 import { AuthContext } from "../../../contexts/auth";
 
 const useStyles = makeStyles(() => ({

@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
-import { ContentWrapper } from "../../../components/content-wrapper";
+
+import { ContentWrapper } from "../../../components";
 
 const useStyles = makeStyles(() => ({
   root: {
