@@ -4,15 +4,16 @@ import {
   makeStyles,
   Paper,
   TextField,
+  Tooltip,
   Typography
 } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import { ContentWrapper, Header } from "../../../components";
 import { AuthContext } from "../../../contexts/auth";
 
-const useStyles = makeStyles(({ spacing }) => ({
+const useStyles = makeStyles(({ palette, spacing }) => ({
   root: {
     display: "flex"
   },
@@ -47,10 +48,9 @@ const useStyles = makeStyles(({ spacing }) => ({
   }
 }));
 
-const FORM_DISABLED = true;
-
 export const Profile = () => {
   const classes = useStyles();
+  const [formDisabled, setFormDisabled] = useState(true);
 
   const { user } = useContext(AuthContext);
   console.log(user);
@@ -74,7 +74,7 @@ export const Profile = () => {
                 fullWidth
                 autoComplete="fname"
                 defaultValue="Joe"
-                disabled={FORM_DISABLED}
+                disabled={formDisabled}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -86,7 +86,7 @@ export const Profile = () => {
                 fullWidth
                 autoComplete="lname"
                 defaultValue="Smith"
-                disabled={FORM_DISABLED}
+                disabled={formDisabled}
               />
             </Grid>
             <Grid item xs={12}>
@@ -98,7 +98,7 @@ export const Profile = () => {
                 fullWidth
                 autoComplete="email"
                 defaultValue="joe.smith@gmail.com"
-                disabled={FORM_DISABLED}
+                disabled={formDisabled}
               />
             </Grid>
             <Grid item xs={12}>
@@ -109,7 +109,7 @@ export const Profile = () => {
                 label="Permanent Residence Number"
                 fullWidth
                 autoComplete="prNo"
-                disabled={FORM_DISABLED}
+                disabled={formDisabled}
               />
             </Grid>
           </Grid>
@@ -128,7 +128,7 @@ export const Profile = () => {
                 fullWidth
                 autoComplete="address-level2"
                 defaultValue="Calgary"
-                disabled={FORM_DISABLED}
+                disabled={formDisabled}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -138,7 +138,7 @@ export const Profile = () => {
                 label="Province"
                 fullWidth
                 defaultValue="Alberta"
-                disabled={FORM_DISABLED}
+                disabled={formDisabled}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -148,7 +148,7 @@ export const Profile = () => {
                 label="Postal code"
                 fullWidth
                 autoComplete="postal-code"
-                disabled={FORM_DISABLED}
+                disabled={formDisabled}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -159,7 +159,7 @@ export const Profile = () => {
                 fullWidth
                 autoComplete="country"
                 defaultValue="Canada"
-                disabled={FORM_DISABLED}
+                disabled={formDisabled}
               />
             </Grid>
           </Grid>
@@ -168,7 +168,7 @@ export const Profile = () => {
           <Button
             variant="contained"
             color="primary"
-            disabled={FORM_DISABLED}
+            disabled={formDisabled}
             className={classes.button}
           >
             Save

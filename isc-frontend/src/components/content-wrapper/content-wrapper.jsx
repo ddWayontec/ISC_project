@@ -1,10 +1,11 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 
-const useStyles = makeStyles(({ spacing }) => ({
+const useStyles = makeStyles(() => ({
   contentWrapper: {
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    alignItems: "center"
   }
 }));
 
