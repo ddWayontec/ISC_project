@@ -13,7 +13,7 @@ import React, { useContext, useState } from "react";
 import { ContentWrapper, Header } from "../../../components";
 import { AuthContext } from "../../../contexts/auth";
 
-const useStyles = makeStyles(({ palette, spacing }) => ({
+const useStyles = makeStyles(({ spacing }) => ({
   root: {
     display: "flex"
   },
@@ -98,67 +98,6 @@ export const Profile = () => {
                 fullWidth
                 autoComplete="email"
                 defaultValue="joe.smith@gmail.com"
-                disabled={formDisabled}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="prNo"
-                name="prNo"
-                label="Permanent Residence Number"
-                fullWidth
-                autoComplete="prNo"
-                disabled={formDisabled}
-              />
-            </Grid>
-          </Grid>
-        </div>
-
-        <div className={classes.section}>
-          <Typography variant="h6" gutterBottom>
-            Address
-          </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="city"
-                name="city"
-                label="City"
-                fullWidth
-                autoComplete="address-level2"
-                defaultValue="Calgary"
-                disabled={formDisabled}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="prov"
-                name="prov"
-                label="Province"
-                fullWidth
-                defaultValue="Alberta"
-                disabled={formDisabled}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="postal"
-                name="postal"
-                label="Postal code"
-                fullWidth
-                autoComplete="postal-code"
-                disabled={formDisabled}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="country"
-                name="country"
-                label="Country"
-                fullWidth
-                autoComplete="country"
-                defaultValue="Canada"
                 disabled={formDisabled}
               />
             </Grid>
