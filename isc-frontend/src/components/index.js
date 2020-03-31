@@ -4,3 +4,4 @@ export { Auth } from "./authentication";
 export { Header } from "./header";
 export { ContentWrapper } from "./content-wrapper";
 export { FormPage } from "./form-page";
+export { LoadingIcon } from "./loading-icon";

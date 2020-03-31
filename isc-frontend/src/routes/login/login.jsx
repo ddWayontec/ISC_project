@@ -1,7 +1,6 @@
 import {
   Avatar,
   Button,
-  CircularProgress,
   Container,
   CssBaseline,
   Link,
@@ -14,6 +13,7 @@ import isEmpty from "lodash/isEmpty";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
+import { LoadingIcon } from "../../components/loading-icon";
 
 import { AuthContext } from "../../contexts/auth";
 import { ROLES } from "../../utils/constants";
@@ -101,7 +101,9 @@ export const Login = ({ redirectPath }) => {
                 pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
               })}
             />
-            {errors.email && <span>This field must be a valid email.</span>}
+            {errors.email && (
+              <Typography>This field must be a valid email.</Typography>
+            )}
             <TextField
               variant="outlined"
               margin="normal"
@@ -132,7 +134,9 @@ export const Login = ({ redirectPath }) => {
             </Link>
           </form>
         ) : (
-          <CircularProgress className={classes.loading} />
+          <div className={classes.loading}>
+            <LoadingIcon />
+          </div>
         )}
       </div>
       {redirect ? (

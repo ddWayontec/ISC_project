@@ -14,12 +14,6 @@ const sidebarItems = {
     },
     { text: "Add immigrant", icon: <AddIcon />, route: "/isc/add-immigrant" },
     {
-      text: "Add service provider",
-      icon: <AddIcon />,
-      route: "/isc/add-service-provider",
-      key: "addServiceProvider"
-    },
-    {
       text: "Add ISC employee",
       icon: <AddIcon />,
       route: "/isc/add-isc-employee",
