@@ -1,5 +1,6 @@
 import { makeStyles, Paper } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import PersonAdd from "@material-ui/icons/PersonAdd";
 import React from "react";
 
 import { ContentWrapper } from "../content-wrapper";
@@ -21,14 +22,18 @@ const useStyles = makeStyles(({ spacing }) => ({
   }
 }));
 
-export const FormPage = ({ headerTitle, children }) => {
+export const FormPage = ({ headerTitle, accountIcon = false, children }) => {
   const classes = useStyles();
 
   return (
     <ContentWrapper>
       <Header title={headerTitle} />
       <Paper className={classes.paper} elevation={2}>
-        <AccountCircle className={classes.icon} />
+        {accountIcon ? (
+          <AccountCircle className={classes.icon} />
+        ) : (
+          <PersonAdd className={classes.icon} />
+        )}
         {children}
       </Paper>
     </ContentWrapper>

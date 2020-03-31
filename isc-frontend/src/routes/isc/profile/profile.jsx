@@ -13,7 +13,7 @@ export const Profile = () => {
   console.log(user);
 
   return (
-    <FormPage headerTitle="My Profile">
+    <FormPage headerTitle="My Profile" accountIcon={true}>
       <div className={classes.section}>
         <Typography variant="h6" gutterBottom>
           Personal Information

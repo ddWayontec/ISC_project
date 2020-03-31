@@ -1,14 +1,15 @@
 import {
   Button,
   Grid,
+  makeStyles,
   Snackbar,
   TextField,
-  Typography,
-  makeStyles
+  Typography
 } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 
 import { FormPage, LoadingIcon } from "../../../components";
 import { useProfileStyles } from "../../../hooks/styles/use-profile-styles";
@@ -19,7 +20,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export const AddImmigrant = () => {
+export const AddIscEmployee = () => {
   const classes = { ...useProfileStyles(), ...useStyles() };
   const [loading, setLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -35,11 +36,11 @@ export const AddImmigrant = () => {
     }, 500);
   };
   return !loading ? (
-    <FormPage headerTitle="Add Immigrant">
+    <FormPage headerTitle="Add ISC Employee">
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={classes.section}>
           <Typography variant="h6" gutterBottom>
-            New Immigrant
+            New Employee
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
@@ -97,66 +98,18 @@ export const AddImmigrant = () => {
             <Grid item xs={12}>
               <TextField
                 required
-                id="prNo"
-                name="prNo"
-                label="Permanent Residence Number"
+                id="id"
+                name="id"
+                label="Unique ID"
                 fullWidth
-                autoComplete="prNo"
+                autoComplete="id"
                 disabled={formDisabled}
+                defaultValue={uuidv4()}
               />
             </Grid>
           </Grid>
         </div>
 
-        <div className={classes.section}>
-          <Typography variant="h6" gutterBottom>
-            Address
-          </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="city"
-                name="city"
-                label="City"
-                fullWidth
-                autoComplete="address-level2"
-                defaultValue="Calgary"
-                disabled={formDisabled}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="prov"
-                name="prov"
-                label="Province"
-                fullWidth
-                defaultValue="Alberta"
-                disabled={formDisabled}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="postal"
-                name="postal"
-                label="Postal code"
-                fullWidth
-                autoComplete="postal-code"
-                disabled={formDisabled}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="country"
-                name="country"
-                label="Country"
-                fullWidth
-                autoComplete="country"
-                defaultValue="Canada"
-                disabled={formDisabled}
-              />
-            </Grid>
-          </Grid>
-        </div>
         <div className={classes.buttonWrapper}>
           <Button
             variant="contained"
@@ -180,7 +133,7 @@ export const AddImmigrant = () => {
         onClose={() => setSnackbarOpen(false)}
       >
         <MuiAlert elevation={6} variant="filled" severity="success">
-          Successfully saved new immigrant profile.
+          Successfully saved new employee profile.
         </MuiAlert>
       </Snackbar>
     </FormPage>
