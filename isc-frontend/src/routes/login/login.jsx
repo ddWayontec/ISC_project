@@ -13,8 +13,8 @@ import isEmpty from "lodash/isEmpty";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
-import { LoadingIcon } from "../../components/loading-icon";
 
+import { LoadingIcon } from "../../components/loading-icon";
 import { AuthContext } from "../../contexts/auth";
 import { ROLES } from "../../utils/constants";
 

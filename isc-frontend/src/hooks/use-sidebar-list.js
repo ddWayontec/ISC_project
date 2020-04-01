@@ -9,7 +9,7 @@ const sidebarItems = {
     {
       text: "List all immigrants",
       icon: <PeopleIcon />,
-      route: "/isc/list-all-immigrants",
+      route: "/isc/immigrants",
       key: "listAllImmigrants"
     },
     { text: "Add immigrant", icon: <AddIcon />, route: "/isc/add-immigrant" },
