@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 
-import { ContentWrapper, Header } from "../../../components";
+import { ViewModules as ViewModulesComponent } from "../../../components";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -18,14 +18,6 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export const ViewModules = () => {
-  const classes = useStyles();
-  return (
-    <ContentWrapper>
-      <Header title={"Module Results"} />
-      <div className={classes.wrapper}>
-        <p className={classes.text}>view modules</p>
-      </div>
-    </ContentWrapper>
-  );
-};
+export const ViewModules = ({ history }) => (
+  <ViewModulesComponent history={history} />
+);

@@ -88,7 +88,7 @@ export const Auth = ({ children }) => {
       let result = {};
       if (email === "isc@gmail.com" && password === "pig") {
         result = handleAuthentication({
-          id: data.uuid,
+          id: "43312434",
           email: data.Extra.creatorOrModifier.ID,
           permissions: data.Extra.permissionTable,
           role: ROLES.ISC_EMPLOYEE
@@ -98,7 +98,7 @@ export const Auth = ({ children }) => {
       //mock immigrant login
       if (email === "immigrant@gmail.com" && password === "cow") {
         result = handleAuthentication({
-          id: data.uuid,
+          id: "123456",
           email: data.Extra.creatorOrModifier.ID,
           permissions: data.Extra.permissionTable,
           role: ROLES.IMMIGRANT

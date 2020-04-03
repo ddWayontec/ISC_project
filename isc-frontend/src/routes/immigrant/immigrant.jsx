@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 import { AppContainer, Sidebar } from "../../components";
 import { AuthContext } from "../../contexts/auth";
@@ -9,15 +9,22 @@ import { ViewModules } from "./view-modules";
 
 export const Immigrant = ({ history }) => {
   const { user } = useContext(AuthContext);
-  const sidebarItems = useSidebarList(user.role);
+  console.log(user);
+  const sidebarItems = useSidebarList(user.role, user.id);
 
   const sidebar = <Sidebar items={sidebarItems} history={history} />;
 
   return (
     <AppContainer sidebar={sidebar}>
       <Switch>
-        <Route exact path="/immigrant" component={ViewModules} />
-        <Route exact path="/immigrant/view-modules" component={ViewModules} />
+        <Route exact path="/immigrant">
+          <Redirect to={`/immigrant/view-modules/${user.id}`} />
+        </Route>
+        <Route
+          exact
+          path="/immigrant/view-modules/:id"
+          component={ViewModules}
+        />
         <Route exact path="/immigrant/profile" component={Profile} />
       </Switch>
     </AppContainer>

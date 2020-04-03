@@ -2,7 +2,9 @@ import AddIcon from "@material-ui/icons/Add";
 import PeopleIcon from "@material-ui/icons/People";
 import Person from "@material-ui/icons/Person";
 import ViewModuleIcon from "@material-ui/icons/ViewModule";
-import React from "react";
+import React, { useState } from "react";
+
+import { ROLES } from "../utils/constants";
 
 const sidebarItems = {
   isc_employee: [
@@ -42,6 +44,12 @@ const sidebarItems = {
   ]
 };
 
-export const useSidebarList = userRole => {
+export const useSidebarList = (userRole, prNo = null) => {
+  const [modified, setModified] = useState(false);
+
+  if (!modified && userRole === ROLES.IMMIGRANT && prNo) {
+    sidebarItems.immigrant[0].route = `${sidebarItems.immigrant[0].route}/${prNo}`;
+    setModified(true);
+  }
   return sidebarItems[userRole] ? sidebarItems[userRole] : [];
 };
