@@ -1,1 +1,1 @@
-export { ImmigrantForm } from "./immigrant-form";
+export { AddImmigrant } from "./add-immigrant";

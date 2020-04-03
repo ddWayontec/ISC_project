@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-import { ImmigrantForm } from "../add-immigrant";
+import { ImmigrantForm } from "../../../components/immigrant-form";
 import { ListAllImmigrants } from "./list-all-immigrants";
 
 export const Immigrants = ({ history }) => {

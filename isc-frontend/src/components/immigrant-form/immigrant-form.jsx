@@ -11,8 +11,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
-import { FormPage, LoadingIcon } from "../../../components";
-import { useProfileStyles } from "../../../hooks/styles/use-profile-styles";
+import { useProfileStyles } from "../../hooks/styles/use-profile-styles";
+import { FormPage, LoadingIcon } from "../index";
 
 // for mocking
 const createData = (firstName, lastName, prNo, email, password) => {
