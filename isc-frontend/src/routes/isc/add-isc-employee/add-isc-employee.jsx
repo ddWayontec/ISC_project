@@ -71,7 +71,7 @@ export const AddIscEmployee = () => {
 
     setLoading(false);
 
-    if (responseData.status === true) {
+    if (responseData.status === true || responseData.Status === true) {
       setSuccessSnackbarOpen(true);
     } else {
       setErrorSnackbarOpen(true);

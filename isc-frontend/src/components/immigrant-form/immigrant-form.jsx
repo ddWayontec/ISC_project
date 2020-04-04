@@ -12,9 +12,10 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
 import { useProfileStyles } from "../../hooks/styles/use-profile-styles";
+import { request } from "../../utils/request";
 import { FormPage, LoadingIcon } from "../index";
 
-// for mocking
+// for mocking get requests which dont work yet
 const createData = (firstName, lastName, prNo, email, password) => {
   return { firstName, lastName, prNo, email, password };
 };
@@ -59,6 +60,18 @@ const mockData = {
   )
 };
 
+const CREATE_IMG_DATA = {
+  mspid: "Org1MSP",
+  affiliation: "org2.department1",
+  extra: {},
+  sm: 2,
+  program: "settlementcal",
+  channelId: "orgchannel",
+  chaincodeid: "ledger",
+  sm_uid: "admin@immigrant.com",
+  sm_pwd: "123456"
+};
+
 const useStyles = makeStyles(({ spacing }) => ({
   form: {
     width: "100%" // Fix IE 11 issue.
@@ -79,17 +92,48 @@ export const ImmigrantForm = ({
 }) => {
   const classes = { ...useProfileStyles(), ...useStyles() };
   const [loading, setLoading] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [successSnackbarOpen, setSuccessSnackbarOpen] = useState(false);
+  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
   const [formDisabled, setFormDisabled] = useState(false);
 
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = async data => {
+  const onSubmit = async formData => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSnackbarOpen(true);
-    }, 500);
+
+    const responseData = await request(
+      "/kc/api/ledgerChainCode/addAndMapUser",
+      {
+        method: "post",
+        data: {
+          ...CREATE_IMG_DATA,
+          id: formData.email,
+          DoA: { format: "02-01-2006", value: "02-01-2007" }, // TODO: add to form
+          DoB: { format: "02-01-2006", value: "02-01-1995" }, // TODO: add to form
+          email: formData.email,
+          mobile_no: "1234567890", // TODO: add to form
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          password: formData.password,
+          PRNo: formData.prNo,
+          proposedUser: [
+            {
+              ID: formData.email,
+              MSPID: "Org1MSP"
+            }
+          ]
+        }
+      }
+    );
+
+    setLoading(false);
+
+    if (responseData.Status === true || responseData.status === true) {
+      setSuccessSnackbarOpen(true);
+    } else {
+      console.log(responseData);
+      setErrorSnackbarOpen(true);
+    }
   };
 
   const { id } = useParams();
@@ -114,6 +158,7 @@ export const ImmigrantForm = ({
                 autoComplete="fname"
                 disabled={formDisabled}
                 defaultValue={defaultValues.firstName}
+                inputRef={register()}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -126,6 +171,7 @@ export const ImmigrantForm = ({
                 autoComplete="lname"
                 disabled={formDisabled}
                 defaultValue={defaultValues.lastName}
+                inputRef={register()}
               />
             </Grid>
             <Grid item xs={12}>
@@ -158,6 +204,7 @@ export const ImmigrantForm = ({
                 type="password"
                 disabled={formDisabled}
                 defaultValue={defaultValues.password}
+                inputRef={register()}
               />
             </Grid>
             <Grid item xs={12}>
@@ -170,6 +217,7 @@ export const ImmigrantForm = ({
                 autoComplete="prNo"
                 disabled={formDisabled}
                 defaultValue={defaultValues.prNo}
+                inputRef={register()}
               />
             </Grid>
           </Grid>
@@ -189,6 +237,7 @@ export const ImmigrantForm = ({
                 autoComplete="address-level2"
                 defaultValue="Calgary"
                 disabled={formDisabled}
+                inputRef={register()}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -199,6 +248,7 @@ export const ImmigrantForm = ({
                 fullWidth
                 defaultValue="Alberta"
                 disabled={formDisabled}
+                inputRef={register()}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -209,6 +259,7 @@ export const ImmigrantForm = ({
                 fullWidth
                 autoComplete="postal-code"
                 disabled={formDisabled}
+                inputRef={register()}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -220,6 +271,7 @@ export const ImmigrantForm = ({
                 autoComplete="country"
                 defaultValue="Canada"
                 disabled={formDisabled}
+                inputRef={register()}
               />
             </Grid>
           </Grid>
@@ -243,17 +295,30 @@ export const ImmigrantForm = ({
         </div>
       </form>
       <Snackbar
-        open={snackbarOpen}
+        open={successSnackbarOpen}
         autoHideDuration={6000}
         positio
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right"
         }}
-        onClose={() => setSnackbarOpen(false)}
+        onClose={() => setSuccessSnackbarOpen(false)}
       >
         <MuiAlert elevation={6} variant="filled" severity="success">
           Successfully saved new immigrant profile.
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorSnackbarOpen}
+        autoHideDuration={6000}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right"
+        }}
+        onClose={() => setSuccessSnackbarOpen(false)}
+      >
+        <MuiAlert elevation={6} variant="filled" severity="error">
+          There was an error creating employee.
         </MuiAlert>
       </Snackbar>
     </FormPage>
