@@ -1,7 +1,11 @@
 import React, { useContext } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
-import { AppContainer, Sidebar } from "../../components";
+import {
+  AppContainer,
+  EnglishLanguageResults,
+  Sidebar
+} from "../../components";
 import { AuthContext } from "../../contexts/auth";
 import { useSidebarList } from "../../hooks";
 import { Profile } from "./profile";
@@ -24,6 +28,11 @@ export const Immigrant = ({ history }) => {
           exact
           path="/immigrant/view-modules/:id"
           component={ViewModules}
+        />
+        <Route
+          exact
+          path="/immigrant/view-modules/:id/english"
+          component={EnglishLanguageResults}
         />
         <Route exact path="/immigrant/profile" component={Profile} />
       </Switch>

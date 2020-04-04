@@ -7,3 +7,4 @@ export { FormPage } from "./form-page";
 export { LoadingIcon } from "./loading-icon";
 export { ImmigrantForm } from "./immigrant-form";
 export { ViewModules } from "./view-modules";
+export { EnglishLanguageResults } from "./module-results";

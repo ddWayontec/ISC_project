@@ -1,7 +1,11 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-import { ImmigrantForm, ViewModules } from "../../../components";
+import {
+  EnglishLanguageResults,
+  ImmigrantForm,
+  ViewModules
+} from "../../../components";
 import { ListAllImmigrants } from "./list-all-immigrants";
 
 export const Immigrants = ({ history }) => {
@@ -17,6 +21,9 @@ export const Immigrants = ({ history }) => {
       </Route>
       <Route exact path="/isc/immigrants/:id/modules">
         <ViewModules history={history} />
+      </Route>
+      <Route exact path="/isc/immigrants/:id/modules/english">
+        <EnglishLanguageResults enableEditing={true} />
       </Route>
     </Switch>
   );
