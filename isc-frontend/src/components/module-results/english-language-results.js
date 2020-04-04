@@ -50,6 +50,13 @@ const mockData = {
     "2asdfas",
     "fake@gmail.com",
     "******"
+  ),
+  "genericimm6@gmail.com": createData(
+    "Real",
+    "User",
+    "genericimm6@gmail.com",
+    "genericimm6@gmail.com",
+    "******"
   )
 };
 

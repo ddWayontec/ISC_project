@@ -1,10 +1,23 @@
 import { rules } from "../rbac-rules";
 import { NO_PERMISSIONS } from "../utils/constants";
 
-export const usePermissions = (role, action, data = {}) => {
+export const usePermissions = ({
+  user,
+  action,
+  resourceId = undefined,
+  data = {}
+}) => {
+  const { id, role } = user;
   const permissions = rules[role];
   // role wasn't found in our rules
   if (!permissions) return false;
+
+  if (resourceId && id !== resourceId) {
+    console.log(
+      `Immigrant user ${id} is trying to access a resource that doesn't belong to them resource id: ${resourceId}`
+    );
+    return false;
+  }
 
   // if the action requires no permissions, as long as the user has a valid role they can perform the action
   if (action === NO_PERMISSIONS) return true;

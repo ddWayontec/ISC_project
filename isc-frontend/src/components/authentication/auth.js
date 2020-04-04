@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 import { AuthProvider } from "../../contexts";
 import { ROLES } from "../../utils/constants";
+import { request } from "../../utils/request";
 
 const mockResponseObj = {
   Status: true,
@@ -36,6 +37,13 @@ const mockedRequestObj = {
   sm: 2,
   sm_uid: "isc2",
   sm_pwd: "123456",
+  ChainCodeId: "ledger",
+  ChannelId: "orgchannel"
+};
+
+const LOGIN_DATA = {
+  Program: "settlementcal",
+  sm: 2,
   ChainCodeId: "ledger",
   ChannelId: "orgchannel"
 };
@@ -80,36 +88,33 @@ export const Auth = ({ children }) => {
   };
 
   const initiateLogin = async (email, password) => {
+    const response = await request("/kc/api/ledgerChainCode/performLogin", {
+      method: "post",
+      data: {
+        ...LOGIN_DATA,
+        sm_uid: email,
+        sm_pwd: password
+      }
+    });
+
+    console.log(`Response status: ${JSON.stringify(response)}`);
+
     //make a request to block chain
-    const data = mockResponseObj;
+    const data = response;
 
-    if (data.Status === true && data.Msg === "success") {
-      // mock employee login
-      let result = {};
-      if (email === "isc@gmail.com" && password === "pig") {
-        result = handleAuthentication({
-          id: "43312434",
-          email: data.Extra.creatorOrModifier.ID,
-          permissions: data.Extra.permissionTable,
-          role: ROLES.ISC_EMPLOYEE
-        });
-      }
+    const roleLookup = {
+      iscemp: ROLES.ISC_EMPLOYEE,
+      immigrant: ROLES.IMMIGRANT
+    };
 
-      //mock immigrant login
-      if (email === "immigrant@gmail.com" && password === "cow") {
-        result = handleAuthentication({
-          id: "123456",
-          email: data.Extra.creatorOrModifier.ID,
-          permissions: data.Extra.permissionTable,
-          role: ROLES.IMMIGRANT
-        });
-      }
+    if (response.Status === true && response.Msg === "success") {
+      const userType = get(response, "Extra.actor");
 
-      // mock login delay
-      return new Promise(resolve => {
-        setTimeout(() => {
-          resolve(result);
-        }, 2000);
+      return handleAuthentication({
+        id: get(response, "Extra.identifier.ID"), // switch to PRno / employee id
+        email: get(response, "Extra.identifier.ID"),
+        role: get(roleLookup, userType, ROLES.VISITOR),
+        permissions: get(response, "Extra.permissionTable")
       });
     }
     return {};

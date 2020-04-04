@@ -8,6 +8,7 @@ import {
 } from "../../components";
 import { AuthContext } from "../../contexts/auth";
 import { useSidebarList } from "../../hooks";
+import ProtectedRoute from "../../utils/protected-route";
 import { Profile } from "./profile";
 import { ViewModules } from "./view-modules";
 
@@ -24,12 +25,12 @@ export const Immigrant = ({ history }) => {
         <Route exact path="/immigrant">
           <Redirect to={`/immigrant/view-modules/${user.id}`} />
         </Route>
-        <Route
+        <ProtectedRoute
           exact
           path="/immigrant/view-modules/:id"
           component={ViewModules}
         />
-        <Route
+        <ProtectedRoute
           exact
           path="/immigrant/view-modules/:id/english"
           component={EnglishLanguageResults}

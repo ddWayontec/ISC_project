@@ -11,7 +11,10 @@ const ProtectedRoute = ({ permission = NO_PERMISSIONS, ...props }) => {
 
   const { authenticated, user } = useContext(AuthContext);
 
-  const allowed = usePermissions(user.role, permission);
+  const splitUrl = useLocation().pathname.split("/");
+  const resourceId = splitUrl[1] === "immigrant" ? splitUrl[3] : undefined;
+
+  const allowed = usePermissions({ user, action: permission, resourceId });
   const location = useLocation().pathname;
 
   console.log(`Authenticated: ${authenticated} allowed: ${allowed}`);
