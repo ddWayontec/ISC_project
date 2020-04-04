@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { FormPage, LoadingIcon } from "../../../components";
 import { useProfileStyles } from "../../../hooks/styles/use-profile-styles";
+import { request } from "../../../utils/request";
 
 const useStyles = makeStyles(() => ({
   form: {
@@ -20,20 +21,61 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+const CREATE_ISC_EMP_DATA = {
+  mspid: "Org1MSP",
+  affiliation: "org2.department1",
+  extra: {},
+  sm: 2,
+  program: "settlementcal",
+  channelId: "orgchannel",
+  chaincodeid: "ledger",
+  sm_uid: "admin@iscemp.com",
+  sm_pwd: "123456"
+};
+
 export const AddIscEmployee = () => {
   const classes = { ...useProfileStyles(), ...useStyles() };
   const [loading, setLoading] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [successSnackbarOpen, setSuccessSnackbarOpen] = useState(false);
+  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
   const [formDisabled, setFormDisabled] = useState(false);
 
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = async data => {
+  const onSubmit = async formData => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSnackbarOpen(true);
-    }, 500);
+
+    const responseData = await request(
+      "/kc/api/ledgerChainCode/addAndMapUser",
+      {
+        method: "post",
+        data: {
+          ...CREATE_ISC_EMP_DATA,
+          id: formData.email,
+          email: formData.email,
+          EmployeeID: formData.id,
+          mobile_no: formData.phone,
+          first_name: formData.firstName,
+          FirstLanguage: formData.firstLanguage,
+          last_name: formData.lastName,
+          password: formData.password,
+          proposedUser: [
+            {
+              ID: formData.email,
+              MSPID: "Org1MSP"
+            }
+          ]
+        }
+      }
+    );
+
+    setLoading(false);
+
+    if (responseData.status === true) {
+      setSuccessSnackbarOpen(true);
+    } else {
+      setErrorSnackbarOpen(true);
+    }
   };
   return !loading ? (
     <FormPage headerTitle="Add ISC Employee">
@@ -52,6 +94,7 @@ export const AddIscEmployee = () => {
                 fullWidth
                 autoComplete="fname"
                 disabled={formDisabled}
+                inputRef={register()}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -63,6 +106,7 @@ export const AddIscEmployee = () => {
                 fullWidth
                 autoComplete="lname"
                 disabled={formDisabled}
+                inputRef={register()}
               />
             </Grid>
             <Grid item xs={12}>
@@ -93,6 +137,7 @@ export const AddIscEmployee = () => {
                 autoComplete="password"
                 type="password"
                 disabled={formDisabled}
+                inputRef={register()}
               />
             </Grid>
             <Grid item xs={12}>
@@ -105,6 +150,33 @@ export const AddIscEmployee = () => {
                 autoComplete="id"
                 disabled={formDisabled}
                 defaultValue={uuidv4()}
+                inputRef={register()}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                required
+                id="firstLanguage"
+                name="firstLanguage"
+                label="First Language"
+                fullWidth
+                autoComplete="firstLanguage"
+                disabled={formDisabled}
+                defaultValue="English"
+                inputRef={register()}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                required
+                id="phone"
+                name="phone"
+                label="Phone Number"
+                fullWidth
+                autoComplete="phoneNumber"
+                disabled={formDisabled}
+                defaultValue=""
+                inputRef={register()}
               />
             </Grid>
           </Grid>
@@ -123,17 +195,29 @@ export const AddIscEmployee = () => {
         </div>
       </form>
       <Snackbar
-        open={snackbarOpen}
+        open={successSnackbarOpen}
         autoHideDuration={6000}
-        positio
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right"
         }}
-        onClose={() => setSnackbarOpen(false)}
+        onClose={() => setSuccessSnackbarOpen(false)}
       >
         <MuiAlert elevation={6} variant="filled" severity="success">
           Successfully saved new employee profile.
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={errorSnackbarOpen}
+        autoHideDuration={6000}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right"
+        }}
+        onClose={() => setSuccessSnackbarOpen(false)}
+      >
+        <MuiAlert elevation={6} variant="filled" severity="error">
+          There was an error creating employee.
         </MuiAlert>
       </Snackbar>
     </FormPage>
