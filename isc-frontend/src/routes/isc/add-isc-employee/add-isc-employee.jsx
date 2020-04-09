@@ -13,25 +13,15 @@ import { v4 as uuidv4 } from "uuid";
 
 import { FormPage, LoadingIcon } from "../../../components";
 import { useProfileStyles } from "../../../hooks/styles/use-profile-styles";
+import { CREATE_ISC_EMPLOYEE_DATA } from "../../../utils/constants";
 import { request } from "../../../utils/request";
+import { statusIsTrue } from "../../../utils/status-is-true";
 
 const useStyles = makeStyles(() => ({
   form: {
     width: "100%" // Fix IE 11 issue.
   }
 }));
-
-const CREATE_ISC_EMP_DATA = {
-  mspid: "Org1MSP",
-  affiliation: "org2.department1",
-  extra: {},
-  sm: 2,
-  program: "settlementcal",
-  channelId: "orgchannel",
-  chaincodeid: "ledger",
-  sm_uid: "admin@iscemp.com",
-  sm_pwd: "123456"
-};
 
 export const AddIscEmployee = () => {
   const classes = { ...useProfileStyles(), ...useStyles() };
@@ -50,7 +40,7 @@ export const AddIscEmployee = () => {
       {
         method: "post",
         data: {
-          ...CREATE_ISC_EMP_DATA,
+          ...CREATE_ISC_EMPLOYEE_DATA.addAndMapUser,
           id: formData.email,
           email: formData.email,
           EmployeeID: formData.id,
@@ -69,14 +59,39 @@ export const AddIscEmployee = () => {
       }
     );
 
-    setLoading(false);
+    if (statusIsTrue(responseData)) {
+      const sendMessageResponse = await request(
+        "/kc/api/ledgerChainCode/sendMessage",
+        {
+          method: "post",
+          data: {
+            ...CREATE_ISC_EMPLOYEE_DATA.sendMessage,
+            Receiver: {
+              ID: formData.email,
+              MSPID: "Org1MSP"
+            },
+            Payload: {
+              Email: formData.email,
+              EmployeeID: formData.id,
+              FirstLanguage: formData.firstLanguage,
+              FirstNameEmp: formData.firstName,
+              LastNameEmp: formData.lastName,
+              Password: formData.password,
+              TelephoneNo: formData.phone
+            }
+          }
+        }
+      );
 
-    if (responseData.status === true || responseData.Status === true) {
-      setSuccessSnackbarOpen(true);
-    } else {
-      setErrorSnackbarOpen(true);
+      if (statusIsTrue(sendMessageResponse)) {
+        setLoading(false);
+        return setSuccessSnackbarOpen(true);
+      }
     }
+    setLoading(false);
+    return setErrorSnackbarOpen(true);
   };
+
   return !loading ? (
     <FormPage headerTitle="Add ISC Employee">
       <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
