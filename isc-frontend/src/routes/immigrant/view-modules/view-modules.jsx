@@ -1,7 +1,8 @@
 import { makeStyles } from "@material-ui/core";
-import React from "react";
+import React, { useContext } from "react";
 
 import { ViewModules as ViewModulesComponent } from "../../../components";
+import { AuthContext } from "../../../contexts/auth";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -18,6 +19,13 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export const ViewModules = ({ history }) => (
-  <ViewModulesComponent history={history} />
-);
+export const ViewModules = ({ history }) => {
+  const { user } = useContext(AuthContext);
+  return (
+    <ViewModulesComponent
+      history={history}
+      firstName={user.firstName}
+      lastName={user.lastName}
+    />
+  );
+};

@@ -71,7 +71,11 @@ export const ListAllImmigrants = ({ history }) => {
     rowData => ({
       icon: () => <ViewModule />,
       tooltip: `View ${rowData.firstName} ${rowData.lastName}'s modules`,
-      onClick: () => history.push(`/isc/immigrants/${rowData.prNo}/modules`)
+      onClick: () =>
+        history.push(`/isc/immigrants/${rowData.prNo}/modules`, {
+          firstName: rowData.firstName,
+          lastName: rowData.lastName
+        })
     })
   ];
 

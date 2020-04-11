@@ -11,7 +11,7 @@ import { Profile } from "./profile";
 
 export const ISC = ({ history }) => {
   const { user } = useContext(AuthContext);
-  const sidebarItems = useSidebarList(user.role);
+  const sidebarItems = useSidebarList(user);
 
   const sidebar = <Sidebar items={sidebarItems} history={history} />;
 

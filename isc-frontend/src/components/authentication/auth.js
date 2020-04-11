@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { AuthProvider } from "../../contexts";
 import { LOGIN_DATA, ROLE_LOOKUP, ROLES } from "../../utils/constants";
-import { getUserIdByEmail } from "../../utils/get-user-id-by-emai";
+import { getBasicUserInfoByEmail } from "../../utils/get-basic-user-info-by-email";
 import { request } from "../../utils/request";
 import { statusIsTrue } from "../../utils/status-is-true";
 
@@ -12,10 +12,20 @@ export const Auth = ({ children }) => {
   const [user, setUser] = useState({ role: ROLES.VISITOR });
   const [accessToken, setAccessToken] = useState("");
 
-  const setSession = ({ accessToken, id, email, role, permissions }) => {
+  const setSession = ({
+    accessToken,
+    id,
+    email,
+    firstName,
+    lastName,
+    role,
+    permissions
+  }) => {
     const user = {
       id,
       email,
+      firstName,
+      lastName,
       role,
       permissions
     };
@@ -33,6 +43,8 @@ export const Auth = ({ children }) => {
     accessToken = "",
     id,
     email,
+    firstName,
+    lastName,
     role,
     permissions
   }) => {
@@ -40,6 +52,8 @@ export const Auth = ({ children }) => {
       accessToken,
       id,
       email,
+      firstName,
+      lastName,
       role,
       permissions
     });
@@ -65,11 +79,16 @@ export const Auth = ({ children }) => {
       const role = get(ROLE_LOOKUP, userType, ROLES.VISITOR);
       const email = get(response, "Extra.identifier.ID");
 
-      const id = await getUserIdByEmail(email, role);
+      const { id, firstName, lastName } = await getBasicUserInfoByEmail(
+        email,
+        role
+      );
 
       return handleAuthentication({
         id,
         email,
+        firstName,
+        lastName,
         role,
         permissions: get(response, "Extra.permissionTable")
       });

@@ -9,62 +9,10 @@ import {
 } from "@material-ui/core";
 import { ViewModule } from "@material-ui/icons";
 import React from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { ContentWrapper } from "../content-wrapper";
 import { Header } from "../header";
-
-// for mocking
-const createData = (firstName, lastName, prNo, email, password) => {
-  return { firstName, lastName, prNo, email, password };
-};
-
-// for mocking
-const mockData = {
-  "123456": createData("Joe", "Smith", "123456", "fake@gmail.com", "******"),
-  "5696869": createData(
-    "Andrew",
-    "Sheer",
-    "5696869",
-    "fake@gmail.com",
-    "******"
-  ),
-  "126325123": createData(
-    "Stephen",
-    "Harper",
-    "126325123",
-    "fake@gmail.com",
-    "******"
-  ),
-  "12312238456": createData(
-    "Justin",
-    "Trudeau",
-    "12312238456",
-    "fake@gmail.com",
-    "******"
-  ),
-  "19234834": createData(
-    "Rachel",
-    "Notley",
-    "19234834",
-    "fake@gmail.com",
-    "******"
-  ),
-  "2asdfas": createData(
-    "Donald",
-    "Trump",
-    "2asdfas",
-    "fake@gmail.com",
-    "******"
-  ),
-  "4000007": createData(
-    "Real",
-    "User",
-    "4000007",
-    "genericimm7@gmail.com",
-    "******"
-  )
-};
 
 const useStyles = makeStyles(({ spacing }) => ({
   card: {
@@ -92,10 +40,8 @@ const useStyles = makeStyles(({ spacing }) => ({
 export const ViewModules = ({ history }) => {
   const classes = useStyles();
 
-  const { pathname } = useLocation();
-
-  const { id } = useParams();
-  const userInfo = id ? mockData[id] : { firstName: "", lastName: "" };
+  const { pathname, state } = useLocation();
+  const { firstName, lastName } = state;
 
   return (
     <ContentWrapper>
@@ -103,7 +49,7 @@ export const ViewModules = ({ history }) => {
       <Paper className={classes.paper} elevation={2}>
         <ViewModule className={classes.icon} />
         <Typography variant="h6" gutterBottom className={classes.section}>
-          {`${userInfo.firstName} ${userInfo.lastName}'s Modules`}
+          {`${firstName} ${lastName}'s Modules`}
         </Typography>
         <Card className={classes.card}>
           <CardActionArea onClick={() => history.push(`${pathname}/english`)}>

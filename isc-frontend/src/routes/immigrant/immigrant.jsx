@@ -15,7 +15,7 @@ import { ViewModules } from "./view-modules";
 export const Immigrant = ({ history }) => {
   const { user } = useContext(AuthContext);
   console.log(user);
-  const sidebarItems = useSidebarList(user.role, user.id);
+  const sidebarItems = useSidebarList(user);
 
   const sidebar = <Sidebar items={sidebarItems} history={history} />;
 
@@ -23,7 +23,12 @@ export const Immigrant = ({ history }) => {
     <AppContainer sidebar={sidebar}>
       <Switch>
         <Route exact path="/immigrant">
-          <Redirect to={`/immigrant/view-modules/${user.id}`} />
+          <Redirect
+            to={{
+              pathname: `/immigrant/view-modules/${user.id}`,
+              state: { firstName: user.firstName, lastName: user.lastName }
+            }}
+          />
         </Route>
         <ProtectedRoute
           exact
