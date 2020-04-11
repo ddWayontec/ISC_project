@@ -78,18 +78,15 @@ export const ListAllImmigrants = ({ history }) => {
     <ContentWrapper>
       <Header title="List All Immigrants" />
       <div className={classes.paper}>
-        {isLoading ? (
-          <LoadingIcon />
-        ) : (
-          <MaterialTable
-            icons={tableIcons}
-            columns={columns}
-            data={data}
-            actions={actions}
-            options={{ actionsColumnIndex: -1 }}
-            title="Immigrants"
-          />
-        )}
+        <MaterialTable
+          isLoading={isLoading}
+          icons={tableIcons}
+          columns={columns}
+          data={data}
+          actions={actions}
+          options={{ actionsColumnIndex: -1, pageSize: 10 }}
+          title="Immigrants"
+        />
       </div>
     </ContentWrapper>
   );
