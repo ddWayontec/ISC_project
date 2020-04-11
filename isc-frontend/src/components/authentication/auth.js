@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { AuthProvider } from "../../contexts";
 import { LOGIN_DATA, ROLE_LOOKUP, ROLES } from "../../utils/constants";
-import { getUserIdByEmail } from "../../utils/get-user-info-by-emai";
+import { getUserIdByEmail } from "../../utils/get-user-id-by-emai";
 import { request } from "../../utils/request";
 import { statusIsTrue } from "../../utils/status-is-true";
 

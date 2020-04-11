@@ -50,7 +50,8 @@ export const ListAllImmigrants = ({ history }) => {
         const cleanedData = response.Extra.map(user => ({
           firstName: get(user, "mapsByNameAndFieldValue.FirstName.value"),
           lastName: get(user, "mapsByNameAndFieldValue.LastName.value"),
-          prNo: get(user, "mapsByNameAndFieldValue.PRNo.value")
+          prNo: get(user, "mapsByNameAndFieldValue.PRNo.value"),
+          email: get(user, "mapsByNameAndFieldValue.Email.value")
         }));
 
         setData(cleanedData);
@@ -65,7 +66,7 @@ export const ListAllImmigrants = ({ history }) => {
     rowData => ({
       icon: () => <Edit />,
       tooltip: `Edit ${rowData.firstName} ${rowData.lastName}'s profile`,
-      onClick: () => history.push(`/isc/immigrants/${rowData.prNo}/profile`)
+      onClick: () => history.push(`/isc/immigrants/${rowData.email}/profile`)
     }),
     rowData => ({
       icon: () => <ViewModule />,

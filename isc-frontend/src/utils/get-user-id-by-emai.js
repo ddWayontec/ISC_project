@@ -6,19 +6,7 @@ import {
   ROLES,
   URLS
 } from "./constants";
-import { request } from "./request";
-
-const requestUserByEmail = async (email, data) => {
-  return await request(URLS.requestReport, {
-    method: "post",
-    data: {
-      ...data,
-      Payload: {
-        Email: email
-      }
-    }
-  });
-};
+import { requestUserByEmail } from "./request-user-by-email";
 
 const getImmigrantIdByEmail = async email => {
   const response = await requestUserByEmail(email, GET_IMMIGRANT_BY_EMAIL_DATA);

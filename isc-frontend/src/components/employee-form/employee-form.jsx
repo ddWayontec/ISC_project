@@ -7,20 +7,19 @@ import {
   Typography
 } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
-import { DatePicker } from "@material-ui/pickers";
 import get from "lodash/get";
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import InputMask from "react-input-mask";
-import { useParams } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
+import { FormPage, LoadingIcon } from "../../components";
 import { AuthContext } from "../../contexts/auth";
 import { useProfileStyles } from "../../hooks/styles/use-profile-styles";
-import { GET_IMMIGRANT_BY_EMAIL_DATA } from "../../utils/constants";
+import { GET_ISC_EMPLOYEE_BY_EMAIL_DATA } from "../../utils/constants";
 import { requestUserByEmail } from "../../utils/request-user-by-email";
 import { statusIsTrue } from "../../utils/status-is-true";
-import { FormPage, LoadingIcon } from "../index";
-import { submitCreateImmigrant } from "./submit-create-immigrant";
+import { submitCreateEmployee } from "./submit-create-employee";
 
 const useStyles = makeStyles(({ spacing }) => ({
   form: {
@@ -28,10 +27,10 @@ const useStyles = makeStyles(({ spacing }) => ({
   }
 }));
 
-export const ImmigrantForm = ({
+export const EmployeeForm = ({
   history,
-  headerTitle = "Add Immigrant",
-  formTitle = "New Immigrant",
+  headerTitle = "Add ISC Employee",
+  formTitle = "New Employee",
   disabled = false,
   viewingOwnProfile = false
 }) => {
@@ -41,60 +40,52 @@ export const ImmigrantForm = ({
   const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
   const [formDisabled, setFormDisabled] = useState(disabled);
 
-  const { register, handleSubmit, errors } = useForm();
-
-  const onSubmit = async formData =>
-    await submitCreateImmigrant({
-      formData,
-      setLoading,
-      setErrorSnackbarOpen,
-      setSuccessSnackbarOpen
-    });
-
-  const { email } = useParams();
+  const { user } = useContext(AuthContext);
   const [defaultValues, setDefaultValues] = useState({});
 
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
       const response = await requestUserByEmail(
-        email,
-        GET_IMMIGRANT_BY_EMAIL_DATA
+        user.email,
+        GET_ISC_EMPLOYEE_BY_EMAIL_DATA
       );
 
       if (statusIsTrue(response)) {
         const cleanedData = response.Extra.map(user => ({
-          firstName: get(user, "mapsByNameAndFieldValue.FirstName.value"),
-          lastName: get(user, "mapsByNameAndFieldValue.LastName.value"),
-          prNo: get(user, "mapsByNameAndFieldValue.PRNo.value"),
+          firstName: get(user, "mapsByNameAndFieldValue.FirstNameEmp.value"),
+          lastName: get(user, "mapsByNameAndFieldValue.LastNameEmp.value"),
+          id: get(user, "mapsByNameAndFieldValue.EmployeeID.value"),
           email: get(user, "mapsByNameAndFieldValue.Email.value"),
           password: get(user, "mapsByNameAndFieldValue.Password.value"),
           phone: get(user, "mapsByNameAndFieldValue.TelephoneNo.value"),
-          dob: get(user, "mapsByNameAndFieldValue.DoB.value.value"),
-          doa: get(user, "mapsByNameAndFieldValue.DoA.value.value")
+          firstLanguage: get(
+            user,
+            "mapsByNameAndFieldValue.FirstLanguage.value"
+          )
         }))[0];
 
         setDefaultValues(cleanedData);
-        setSelectedDOA(cleanedData.doa);
-        setSelectedDOB(cleanedData.dob);
       }
 
       console.log(`user data/: ${JSON.stringify(response)}`);
       setLoading(false);
     };
 
-    if (email) {
-      fetchUserData(email);
+    if (viewingOwnProfile) {
+      fetchUserData();
     }
   }, []);
 
-  // used for date pickers onChange handlers
-  const [selectedDOB, setSelectedDOB] = useState(
-    defaultValues.dob ? defaultValues.dob : null
-  );
-  const [selectedDOA, setSelectedDOA] = useState(
-    defaultValues.doa ? defaultValues.doa : null
-  );
+  const { register, handleSubmit, errors } = useForm();
+
+  const onSubmit = async formData =>
+    await submitCreateEmployee({
+      formData,
+      setLoading,
+      setSuccessSnackbarOpen,
+      setErrorSnackbarOpen
+    });
 
   return !loading ? (
     <FormPage headerTitle={headerTitle} accountIcon={viewingOwnProfile}>
@@ -140,8 +131,6 @@ export const ImmigrantForm = ({
                 autoComplete="email"
                 disabled={formDisabled}
                 defaultValue={defaultValues.email}
-                error={errors.email}
-                helperText={errors.email && "This field must be a valid email."}
                 inputRef={register({
                   required: true,
                   pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -162,6 +151,34 @@ export const ImmigrantForm = ({
                 type="password"
                 disabled={formDisabled}
                 defaultValue={defaultValues.password}
+                inputRef={register()}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="id"
+                name="id"
+                label="Unique ID"
+                fullWidth
+                autoComplete="id"
+                disabled={formDisabled}
+                defaultValue={viewingOwnProfile ? defaultValues.id : uuidv4()}
+                inputRef={register()}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                required
+                id="firstLanguage"
+                name="firstLanguage"
+                label="First Language"
+                fullWidth
+                autoComplete="firstLanguage"
+                disabled={formDisabled}
+                defaultValue={
+                  viewingOwnProfile ? defaultValues.firstLanguage : "English"
+                }
                 inputRef={register()}
               />
             </Grid>
@@ -197,54 +214,6 @@ export const ImmigrantForm = ({
                   />
                 )}
               </InputMask>
-            </Grid>
-            <Grid item xs={6}>
-              <DatePicker
-                id="dob"
-                name="dob"
-                label="Date of Birth"
-                format="DD-MM-YYYY"
-                value={selectedDOB}
-                onChange={setSelectedDOB}
-                disabled={formDisabled}
-                fullWidth
-                inputRef={register()}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                required
-                id="prNo"
-                name="prNo"
-                label="Permanent Residence Number"
-                fullWidth
-                autoComplete="prNo"
-                disabled={formDisabled}
-                defaultValue={defaultValues.prNo}
-                error={errors.prNo}
-                helperText={
-                  errors.prNo &&
-                  "PR Numbers must start with 2 characters followed by either 7 or 10 digits."
-                }
-                inputRef={register({
-                  required: true,
-                  pattern: /^[A-z]{2}([0-9]{7}|[0-9]{10})$/
-                })}
-              />
-            </Grid>
-
-            <Grid item xs={6}>
-              <DatePicker
-                id="doa"
-                name="doa"
-                label="Date of Arrival"
-                format="DD-MM-YYYY"
-                fullWidth
-                value={selectedDOA}
-                onChange={setSelectedDOA}
-                disabled={formDisabled}
-                inputRef={register()}
-              />
             </Grid>
           </Grid>
         </div>
@@ -284,7 +253,7 @@ export const ImmigrantForm = ({
         onClose={() => setSuccessSnackbarOpen(false)}
       >
         <MuiAlert elevation={6} variant="filled" severity="success">
-          Successfully saved new immigrant profile.
+          Successfully saved new employee profile.
         </MuiAlert>
       </Snackbar>
       <Snackbar
