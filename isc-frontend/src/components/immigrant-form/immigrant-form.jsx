@@ -51,11 +51,12 @@ export const ImmigrantForm = ({
       setSuccessSnackbarOpen
     });
 
+  const { user } = useContext(AuthContext);
   const { email } = useParams();
   const [defaultValues, setDefaultValues] = useState({});
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUserData = async email => {
       setLoading(true);
       const response = await requestUserByEmail(
         email,
@@ -85,6 +86,8 @@ export const ImmigrantForm = ({
 
     if (email) {
       fetchUserData(email);
+    } else if (viewingOwnProfile) {
+      fetchUserData(user.email);
     }
   }, []);
 
