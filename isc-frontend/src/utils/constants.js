@@ -63,15 +63,24 @@ export const CREATE_IMMIGRANT = {
   }
 };
 
-export const GET_IMMIGRANT_BY_EMAIL_DATA = {
+const GET_IMMIGRANT_DATA = {
   ...BASE_REQUEST_DATA.uppercaseKeys,
   Receiver: {
     ID: "u1@serviceprovider.com",
     MSPID: "Org1MSP"
   },
-  StructureId: "immigrantreport",
   sm_uid: "u1@emp.com",
   sm_pwd: "123456"
+};
+
+export const LIST_IMMIGRANTS_DATA = {
+  ...GET_IMMIGRANT_DATA,
+  StructureId: "listofimmigrants"
+};
+
+export const GET_IMMIGRANT_BY_EMAIL_DATA = {
+  ...GET_IMMIGRANT_DATA,
+  StructureId: "immigrantreport"
 };
 
 export const GET_ISC_EMPLOYEE_BY_EMAIL_DATA = {
