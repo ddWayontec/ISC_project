@@ -9,6 +9,7 @@ import {
 import MuiAlert from "@material-ui/lab/Alert";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import InputMask from "react-input-mask";
 import { v4 as uuidv4 } from "uuid";
 
 import { FormPage, LoadingIcon } from "../../../components";
@@ -17,13 +18,20 @@ import { CREATE_ISC_EMPLOYEE_DATA } from "../../../utils/constants";
 import { request } from "../../../utils/request";
 import { statusIsTrue } from "../../../utils/status-is-true";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ spacing }) => ({
   form: {
     width: "100%" // Fix IE 11 issue.
+  },
+  buttonWrapper: {
+    marginTop: spacing(4),
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "baseline",
+    float: "right"
   }
 }));
 
-export const AddIscEmployee = () => {
+export const AddIscEmployee = ({ history }) => {
   const classes = { ...useProfileStyles(), ...useStyles() };
   const [loading, setLoading] = useState(false);
   const [successSnackbarOpen, setSuccessSnackbarOpen] = useState(false);
@@ -182,22 +190,46 @@ export const AddIscEmployee = () => {
               />
             </Grid>
             <Grid item xs={6}>
-              <TextField
-                required
-                id="phone"
-                name="phone"
-                label="Phone Number"
-                fullWidth
-                autoComplete="phoneNumber"
+              <InputMask
+                mask="(999) 999-9999"
+                maskChar=" "
                 disabled={formDisabled}
-                defaultValue=""
-                inputRef={register()}
-              />
+                error={errors.phone}
+                helperText={
+                  errors.phone && "This field must be a valid phone number."
+                }
+              >
+                {() => (
+                  <TextField
+                    required
+                    id="phone"
+                    name="phone"
+                    label="Phone"
+                    fullWidth
+                    autoComplete="phone"
+                    disabled={formDisabled}
+                    error={errors.phone}
+                    helperText={
+                      errors.phone && "This field must be a valid phone number."
+                    }
+                    inputRef={register({
+                      required: true,
+                      pattern: /^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/
+                    })}
+                  />
+                )}
+              </InputMask>
             </Grid>
           </Grid>
         </div>
 
         <div className={classes.buttonWrapper}>
+          <Button
+            className={classes.cancelButton}
+            onClick={() => history.push("/isc/immigrants")}
+          >
+            Cancel
+          </Button>
           <Button
             variant="contained"
             color="primary"

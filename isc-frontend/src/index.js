@@ -1,3 +1,5 @@
+import MomentUtils from "@date-io/moment";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -12,7 +14,9 @@ ReactDOM.render(
   <Auth>
     <Router>
       <ThemeProvider theme={theme}>
-        <App />
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <App />
+        </MuiPickersUtilsProvider>
       </ThemeProvider>
     </Router>
   </Auth>,

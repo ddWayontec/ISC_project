@@ -12,5 +12,9 @@ export const useProfileStyles = makeStyles(({ spacing }) => ({
   },
   button: {
     marginBottom: spacing(1)
+  },
+  cancelButton: {
+    marginBottom: spacing(1),
+    marginRight: spacing(0.5)
   }
 }));
