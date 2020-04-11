@@ -43,6 +43,7 @@ export const submitCreateEmployee = async ({
             MSPID: "Org1MSP"
           },
           Payload: {
+            ...CREATE_ISC_EMPLOYEE_DATA.sendMessage.Payload,
             Email: formData.email,
             EmployeeID: formData.id,
             FirstLanguage: formData.firstLanguage,

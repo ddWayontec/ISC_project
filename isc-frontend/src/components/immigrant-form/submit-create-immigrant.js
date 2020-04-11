@@ -44,6 +44,7 @@ export const submitCreateImmigrant = async ({
           ...CREATE_IMMIGRANT.sendMessage,
           Receiver: { ID: formData.email, MSPID: "Org1MSP" },
           Payload: {
+            ...CREATE_IMMIGRANT.sendMessage.Payload,
             DoA: { format: "02-01-2006", value: formData.doa.toString() },
             DoB: { format: "02-01-2006", value: formData.dob.toString() },
             Email: formData.email,

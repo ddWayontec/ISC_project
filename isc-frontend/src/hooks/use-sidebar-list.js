@@ -5,7 +5,7 @@ import ViewModuleIcon from "@material-ui/icons/ViewModule";
 import React from "react";
 
 export const useSidebarList = user => {
-  const { role, id, firstName, lastName } = user;
+  const { role, id, firstName, lastName, email } = user;
 
   const sidebarItems = {
     isc_employee: [
@@ -34,8 +34,8 @@ export const useSidebarList = user => {
         text: "My Modules",
         icon: <ViewModuleIcon />,
         route: {
-          pathname: `/immigrant/view-modules/${id}`,
-          state: { firstName, lastName }
+          pathname: `/immigrant/view-modules/${email}`,
+          state: { firstName, lastName, prNo: id }
         },
         key: "viewModules"
       },

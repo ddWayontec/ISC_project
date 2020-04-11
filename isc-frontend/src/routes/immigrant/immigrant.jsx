@@ -25,19 +25,23 @@ export const Immigrant = ({ history }) => {
         <Route exact path="/immigrant">
           <Redirect
             to={{
-              pathname: `/immigrant/view-modules/${user.id}`,
-              state: { firstName: user.firstName, lastName: user.lastName }
+              pathname: `/immigrant/view-modules/${user.email}`,
+              state: {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                prNo: user.id
+              }
             }}
           />
         </Route>
         <ProtectedRoute
           exact
-          path="/immigrant/view-modules/:id"
+          path="/immigrant/view-modules/:email"
           component={ViewModules}
         />
         <ProtectedRoute
           exact
-          path="/immigrant/view-modules/:id/english"
+          path="/immigrant/view-modules/:email/english"
           component={EnglishLanguageResults}
         />
         <Route exact path="/immigrant/profile" component={Profile} />

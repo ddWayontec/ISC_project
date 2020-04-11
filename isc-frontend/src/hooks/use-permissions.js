@@ -7,14 +7,14 @@ export const usePermissions = ({
   resourceId = undefined,
   data = {}
 }) => {
-  const { id, role } = user;
+  const { email, role } = user;
   const permissions = rules[role];
   // role wasn't found in our rules
   if (!permissions) return false;
 
-  if (resourceId && id && id.toString() !== resourceId.toString()) {
+  if (resourceId && email && email.toString() !== resourceId.toString()) {
     console.log(
-      `Immigrant user ${id} is trying to access a resource that doesn't belong to them resource id: ${resourceId}`
+      `Immigrant user ${email} is trying to access a resource that doesn't belong to them resource id: ${resourceId}`
     );
     return false;
   }

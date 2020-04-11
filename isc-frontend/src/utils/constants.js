@@ -42,7 +42,10 @@ export const CREATE_ISC_EMPLOYEE_DATA = {
     ...BASE_REQUEST_DATA.uppercaseKeys,
     StructureId: "registeriscemployee",
     sm_uid: "u1@emp.com",
-    sm_pwd: "123456"
+    sm_pwd: "123456",
+    Payload: {
+      isValid: true
+    }
   }
 };
 
@@ -59,7 +62,10 @@ export const CREATE_IMMIGRANT = {
     ...BASE_REQUEST_DATA.uppercaseKeys,
     StructureId: "registerimmigrant",
     sm_uid: "u1@emp.com",
-    sm_pwd: "123456"
+    sm_pwd: "123456",
+    Payload: {
+      isValid: true
+    }
   }
 };
 

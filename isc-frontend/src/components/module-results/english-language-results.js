@@ -1,8 +1,9 @@
 import { Grid, makeStyles, Paper, Typography } from "@material-ui/core";
 import noop from "lodash/noop";
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
+import { useBasicImmigrantInfoWithState } from "../../hooks/use-basic-immigrant-info-with-state";
 import { BlockchainVerified } from "../blockchain-verified";
 import { ContentWrapper } from "../content-wrapper";
 import { Header } from "../header";
@@ -51,7 +52,7 @@ const mockData = {
     "fake@gmail.com",
     "******"
   ),
-  "genericimm6@gmail.com": createData(
+  "4000007": createData(
     "Real",
     "User",
     "genericimm6@gmail.com",
@@ -81,9 +82,16 @@ const useStyles = makeStyles(({ spacing }) => ({
 export const EnglishLanguageResults = ({ enableEditing = false }) => {
   const classes = useStyles();
   const [disabled, setDisabled] = useState(true);
+  const [isLoading, setLoading] = useState(false);
 
-  const { id } = useParams();
-  const userInfo = id ? mockData[id] : {};
+  const { email } = useParams();
+
+  const { state } = useLocation();
+  const { firstName, lastName, prNo } = state ? state : {};
+  const [userData, setUserData] = useState({ firstName, lastName, prNo });
+
+  // state is undefined when navigating to route directly
+  useBasicImmigrantInfoWithState({ state, email, setUserData, setLoading });
 
   const hash = "some-mock-hash";
 
@@ -97,9 +105,9 @@ export const EnglishLanguageResults = ({ enableEditing = false }) => {
               Assessment Results
             </Typography>
             <Typography variant="h6">
-              {userInfo.firstName} {userInfo.lastName}
+              {userData.firstName} {userData.lastName}
             </Typography>
-            <Typography>PR #: {id}</Typography>
+            <Typography>PR #: {prNo}</Typography>
             <Typography className={classes.section}>
               BM Results from ILVARC
             </Typography>

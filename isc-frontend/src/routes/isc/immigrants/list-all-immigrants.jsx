@@ -72,9 +72,10 @@ export const ListAllImmigrants = ({ history }) => {
       icon: () => <ViewModule />,
       tooltip: `View ${rowData.firstName} ${rowData.lastName}'s modules`,
       onClick: () =>
-        history.push(`/isc/immigrants/${rowData.prNo}/modules`, {
+        history.push(`/isc/immigrants/${rowData.email}/modules`, {
           firstName: rowData.firstName,
-          lastName: rowData.lastName
+          lastName: rowData.lastName,
+          prNo: rowData.prNo
         })
     })
   ];
