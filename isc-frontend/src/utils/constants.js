@@ -7,48 +7,84 @@ export const ROLES = {
   VISITOR: "visitor"
 };
 
+export const ROLE_LOOKUP = {
+  iscemp: ROLES.ISC_EMPLOYEE,
+  immigrant: ROLES.IMMIGRANT
+};
+
+export const BASE_REQUEST_DATA = {
+  uppercaseKeys: {
+    Program: "settlementcal",
+    sm: 2,
+    ChainCodeId: "ledger",
+    ChannelId: "orgchannel"
+  },
+  lowercaseKeys: {
+    program: "settlementcal",
+    sm: 2,
+    channelId: "orgchannel",
+    chaincodeid: "ledger"
+  }
+};
+
+export const LOGIN_DATA = BASE_REQUEST_DATA.uppercaseKeys;
+
 export const CREATE_ISC_EMPLOYEE_DATA = {
   addAndMapUser: {
+    ...BASE_REQUEST_DATA.lowercaseKeys,
     mspid: "Org1MSP",
     affiliation: "org2.department1",
     extra: {},
-    sm: 2,
-    program: "settlementcal",
-    channelId: "orgchannel",
-    chaincodeid: "ledger",
     sm_uid: "admin@iscemp.com",
     sm_pwd: "123456"
   },
   sendMessage: {
-    Program: "settlementcal",
+    ...BASE_REQUEST_DATA.uppercaseKeys,
     StructureId: "registeriscemployee",
-    sm: 2,
     sm_uid: "u1@emp.com",
-    sm_pwd: "123456",
-    ChainCodeId: "ledger",
-    ChannelId: "orgchannel"
+    sm_pwd: "123456"
   }
 };
 
 export const CREATE_IMMIGRANT = {
   addAndMapUser: {
+    ...BASE_REQUEST_DATA.lowercaseKeys,
     mspid: "Org1MSP",
     affiliation: "org2.department1",
     extra: {},
-    sm: 2,
-    program: "settlementcal",
-    channelId: "orgchannel",
-    chaincodeid: "ledger",
     sm_uid: "admin@immigrant.com",
     sm_pwd: "123456"
   },
   sendMessage: {
-    Program: "settlementcal",
+    ...BASE_REQUEST_DATA.uppercaseKeys,
     StructureId: "registerimmigrant",
-    sm: 2,
     sm_uid: "u1@emp.com",
-    sm_pwd: "123456",
-    ChainCodeId: "ledger",
-    ChannelId: "orgchannel"
+    sm_pwd: "123456"
   }
+};
+
+export const GET_IMMIGRANT_BY_EMAIL_DATA = {
+  ...BASE_REQUEST_DATA.uppercaseKeys,
+  Receiver: {
+    ID: "u1@serviceprovider.com",
+    MSPID: "Org1MSP"
+  },
+  StructureId: "immigrantreport",
+  sm_uid: "u1@emp.com",
+  sm_pwd: "123456"
+};
+
+export const GET_ISC_EMPLOYEE_BY_EMAIL_DATA = {
+  ...BASE_REQUEST_DATA.uppercaseKeys,
+  Receiver: {
+    ID: "u1@serviceprovider.com",
+    MSPID: "Org1MSP"
+  },
+  StructureId: "iscemplyeereport",
+  sm_uid: "u1@emp.com",
+  sm_pwd: "123456"
+};
+
+export const URLS = {
+  requestReport: "/kc/api/ledgerChainCode/requestReport"
 };

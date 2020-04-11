@@ -57,11 +57,11 @@ const mockData = {
     "fake@gmail.com",
     "******"
   ),
-  "genericimm6@gmail.com": createData(
+  "4000007": createData(
     "Real",
     "User",
-    "genericimm6@gmail.com",
-    "genericimm6@gmail.com",
+    "4000007",
+    "genericimm7@gmail.com",
     "******"
   )
 };
@@ -95,7 +95,7 @@ export const ViewModules = ({ history }) => {
   const { pathname } = useLocation();
 
   const { id } = useParams();
-  const userInfo = id ? mockData[id] : {};
+  const userInfo = id ? mockData[id] : { firstName: "", lastName: "" };
 
   return (
     <ContentWrapper>

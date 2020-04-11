@@ -12,7 +12,7 @@ export const usePermissions = ({
   // role wasn't found in our rules
   if (!permissions) return false;
 
-  if (resourceId && id !== resourceId) {
+  if (resourceId && id && id.toString() !== resourceId.toString()) {
     console.log(
       `Immigrant user ${id} is trying to access a resource that doesn't belong to them resource id: ${resourceId}`
     );

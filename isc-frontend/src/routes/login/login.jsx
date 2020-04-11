@@ -57,7 +57,7 @@ export const Login = ({ redirectPath }) => {
   const onSubmit = async data => {
     setLoading(true);
     const { email, password } = data;
-    console.log(`form submitted: ${JSON.stringify(data)}`);
+
     const loginResult = await initiateLogin(email, password);
     console.log(`Login result: ${JSON.stringify(loginResult)}`);
 

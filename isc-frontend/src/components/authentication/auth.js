@@ -2,51 +2,10 @@ import get from "lodash/get";
 import React, { useState } from "react";
 
 import { AuthProvider } from "../../contexts";
-import { ROLES } from "../../utils/constants";
+import { LOGIN_DATA, ROLE_LOOKUP, ROLES } from "../../utils/constants";
+import { getUserIdByEmail } from "../../utils/get-user-info-by-emai";
 import { request } from "../../utils/request";
-
-const mockResponseObj = {
-  Status: true,
-  Msg: "success",
-  Extra: {
-    USER_TYPE: "HL_USER",
-    actor: "iscemp",
-    assignablePermissionsByUsers: [],
-    creatorOrModifier: {
-      ID: "admin@iscemp.com",
-      MSPID: "Org1MSP"
-    },
-    details: {},
-    entity: "iscemployee",
-    identifier: {
-      ID: "isc2",
-      MSPID: "Org1MSP"
-    },
-    permissionTable: {
-      allowed_publish: [],
-      allowed_receive: ["registeriscemployee", "addresults"],
-      allowed_send: ["registerimmigrant", "registeriscemployee", "addresults"]
-    },
-    program: "settlementcal",
-    uuid: "dd170c74f9aef9eb46522bbd3e9ada392aa19e98a0076ab20be7d5c0ddf56e8d"
-  }
-};
-
-const mockedRequestObj = {
-  Program: "settlementcal",
-  sm: 2,
-  sm_uid: "isc2",
-  sm_pwd: "123456",
-  ChainCodeId: "ledger",
-  ChannelId: "orgchannel"
-};
-
-const LOGIN_DATA = {
-  Program: "settlementcal",
-  sm: 2,
-  ChainCodeId: "ledger",
-  ChannelId: "orgchannel"
-};
+import { statusIsTrue } from "../../utils/status-is-true";
 
 export const Auth = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
@@ -77,7 +36,6 @@ export const Auth = ({ children }) => {
     role,
     permissions
   }) => {
-    // check if its expired here?
     return setSession({
       accessToken,
       id,
@@ -102,18 +60,17 @@ export const Auth = ({ children }) => {
     //make a request to block chain
     const data = response;
 
-    const roleLookup = {
-      iscemp: ROLES.ISC_EMPLOYEE,
-      immigrant: ROLES.IMMIGRANT
-    };
-
-    if (response.Status === true && response.Msg === "success") {
+    if (statusIsTrue(data)) {
       const userType = get(response, "Extra.actor");
+      const role = get(ROLE_LOOKUP, userType, ROLES.VISITOR);
+      const email = get(response, "Extra.identifier.ID");
+
+      const id = await getUserIdByEmail(email, role);
 
       return handleAuthentication({
-        id: get(response, "Extra.identifier.ID"), // switch to PRno / employee id
-        email: get(response, "Extra.identifier.ID"),
-        role: get(roleLookup, userType, ROLES.VISITOR),
+        id,
+        email,
+        role,
         permissions: get(response, "Extra.permissionTable")
       });
     }
