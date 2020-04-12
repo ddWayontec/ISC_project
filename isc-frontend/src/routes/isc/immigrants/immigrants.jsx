@@ -20,11 +20,11 @@ export const Immigrants = ({ history }) => {
           disabled={true}
         />
       </Route>
-      <Route exact path="/isc/immigrants/:id/modules">
+      <Route exact path="/isc/immigrants/:email/modules">
         <ViewModules history={history} />
       </Route>
-      <Route exact path="/isc/immigrants/:id/modules/english">
-        <EnglishLanguageResults enableEditing={true} />
+      <Route exact path="/isc/immigrants/:email/modules/english">
+        <EnglishLanguageResults history={history} enableEditing={true} />
       </Route>
     </Switch>
   );

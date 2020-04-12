@@ -1,7 +1,8 @@
 import {
   Button,
-  Grid,
   makeStyles,
+  MenuItem,
+  Select,
   Table,
   TableBody,
   TableCell,
@@ -9,8 +10,8 @@ import {
   TableRow,
   TextField
 } from "@material-ui/core";
-import noop from "lodash/noop";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Controller } from "react-hook-form";
 
 const useStyles = makeStyles(({ spacing }) => ({
   buttonWrapper: {
@@ -22,9 +23,59 @@ const useStyles = makeStyles(({ spacing }) => ({
   }
 }));
 
+const scoreOptions = [
+  "Pre-B",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "NA",
+  "IE"
+];
+
+const ScoreDropdown = ({ id, name, value, disabled, setValue }) => {
+  const [val, setVal] = useState(value);
+  setValue(name, val);
+  return (
+    // <TextField
+    //   id={id}
+    //   name={name}
+    //   select
+    //   fullWidth
+    //   value={val}
+    //   onChange={e => setVal(e.target.value)}
+    //   size="small"
+    //   disabled={disabled}
+    //   inputRef={register()}
+    // >
+    <Select
+      value={val}
+      id={id}
+      disabled={disabled}
+      onChange={e => {
+        setVal(e.target.value);
+        // setValue(name, e.target.value);
+      }}
+    >
+      {scoreOptions.map(option => (
+        <MenuItem key={option} value={option}>
+          {option}
+        </MenuItem>
+      ))}
+    </Select>
+    // </TextField>
+  );
+};
+
 export const ResultsTable = ({
   enableEditing,
   disabled,
+  register,
+  setValue,
   setDisabled,
   handleSave
 }) => {
@@ -43,57 +94,98 @@ export const ResultsTable = ({
         <TableBody>
           <TableRow>
             <TableCell>Listening</TableCell>
-            <TableCell>
-              <TextField defaultValue="X" size="small" disabled={disabled} />
+            <TableCell name="cell1">
+              <ScoreDropdown
+                id="listeningBenchmark"
+                name="listeningBenchmark"
+                value="2"
+                disabled={disabled}
+                register={register}
+                setValue={setValue}
+              />
             </TableCell>
             <TableCell>
-              <TextField defaultValue="X" size="small" disabled={disabled} />
+              <ScoreDropdown
+                id="listeningResult"
+                name="listeningResult"
+                value="2"
+                disabled={disabled}
+                register={register}
+                setValue={setValue}
+              />
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Speaking</TableCell>
             <TableCell>
-              <TextField defaultValue="X" size="small" disabled={disabled} />
+              <ScoreDropdown
+                id="speakingBenchmark"
+                name="speakingBenchmark"
+                value="2"
+                disabled={disabled}
+                register={register}
+                setValue={setValue}
+              />
             </TableCell>
             <TableCell>
-              <TextField defaultValue="X" size="small" disabled={disabled} />
+              <ScoreDropdown
+                id="speakingResult"
+                name="speakingResult"
+                value="2"
+                disabled={disabled}
+                register={register}
+                setValue={setValue}
+              />
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Reading</TableCell>
             <TableCell>
-              <TextField defaultValue="X" size="small" disabled={disabled} />
+              <ScoreDropdown
+                id="readingBenchmark"
+                name="readingBenchmark"
+                value="2"
+                disabled={disabled}
+                register={register}
+                setValue={setValue}
+              />
             </TableCell>
             <TableCell>
-              <TextField defaultValue="X" size="small" disabled={disabled} />
+              <ScoreDropdown
+                id="readingResult"
+                name="readingResult"
+                value="2"
+                disabled={disabled}
+                register={register}
+                setValue={setValue}
+              />
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Writing</TableCell>
             <TableCell>
-              <TextField defaultValue="X" size="small" disabled={disabled} />
+              <ScoreDropdown
+                id="writingBenchmark"
+                name="writingBenchmark"
+                value="2"
+                disabled={disabled}
+                register={register}
+                setValue={setValue}
+              />
             </TableCell>
             <TableCell>
-              <TextField defaultValue="X" size="small" disabled={disabled} />
+              <ScoreDropdown
+                id="writingResult"
+                name="writingResult"
+                value="Pre-B"
+                disabled={disabled}
+                register={register}
+                setValue={setValue}
+              />
             </TableCell>
           </TableRow>
         </TableBody>
       </Table>
-      {enableEditing ? (
-        <div className={classes.buttonWrapper}>
-          {disabled ? (
-            <Button variant="contained" onClick={() => setDisabled(false)}>
-              Edit
-            </Button>
-          ) : (
-            <Button variant="contained" color="primary" onClick={handleSave}>
-              Save
-            </Button>
-          )}
-        </div>
-      ) : (
-        noop
-      )}
     </>
   );
 };
