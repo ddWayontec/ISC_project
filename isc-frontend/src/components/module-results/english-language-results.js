@@ -108,11 +108,9 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
   const { email } = useParams();
 
   const { state } = useLocation();
-  const { firstName, lastName, prNo } = state ? state : {};
-  const [userData, setUserData] = useState({ firstName, lastName, prNo });
 
   // state is undefined when navigating to route directly
-  useBasicImmigrantInfoWithState({ state, email, setUserData, setLoading });
+  const userData = useBasicImmigrantInfoWithState({ state, email, setLoading });
 
   const { register, handleSubmit, setValue, errors } = useForm();
 

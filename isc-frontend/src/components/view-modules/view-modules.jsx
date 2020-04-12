@@ -45,13 +45,11 @@ export const ViewModules = ({ history }) => {
   const [isLoading, setLoading] = useState(false);
 
   const { pathname, state } = useLocation();
-  const { firstName, lastName, prNo } = state ? state : {};
-  const [userData, setUserData] = useState({ firstName, lastName, prNo });
 
   const { email } = useParams();
 
   // state is undefined when navigating to route directly
-  useBasicImmigrantInfoWithState({ state, email, setUserData, setLoading });
+  const userData = useBasicImmigrantInfoWithState({ state, email, setLoading });
 
   return (
     <ContentWrapper>
@@ -70,9 +68,9 @@ export const ViewModules = ({ history }) => {
             <CardActionArea
               onClick={() =>
                 history.push(`${pathname}/english`, {
-                  firstName,
-                  lastName,
-                  prNo
+                  firstName: userData.firstName,
+                  lastName: userData.lastName,
+                  prNo: userData.prNo
                 })
               }
             >

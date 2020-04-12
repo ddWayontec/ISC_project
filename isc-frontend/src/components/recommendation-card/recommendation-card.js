@@ -40,7 +40,7 @@ export const RecommendationCard = ({
         </Typography>
         <TextField
           fullWidth
-          name="schoolRecommendation"
+          name={`schoolRecommendation${option}`}
           label="School"
           disabled={disabled}
           defaultValue={school}
@@ -48,7 +48,7 @@ export const RecommendationCard = ({
         />
         <TextField
           fullWidth
-          name="programRecommendation"
+          name={`programRecommendation${option}`}
           label="Program"
           disabled={disabled}
           defaultValue={program}

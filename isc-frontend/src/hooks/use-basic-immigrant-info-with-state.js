@@ -1,5 +1,5 @@
 import get from "lodash/get";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { GET_IMMIGRANT_BY_EMAIL_DATA } from "../utils/constants";
 import { requestUserByEmail } from "../utils/request-user-by-email";
@@ -8,9 +8,10 @@ import { statusIsTrue } from "../utils/status-is-true";
 export const useBasicImmigrantInfoWithState = ({
   state,
   email,
-  setLoading,
-  setUserData
+  setLoading
 }) => {
+  const { firstName, lastName, prNo } = state ? state : {};
+  const [userData, setUserData] = useState({ firstName, lastName, prNo });
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
@@ -38,4 +39,6 @@ export const useBasicImmigrantInfoWithState = ({
       fetchUserData();
     }
   }, []);
+
+  return userData;
 };
