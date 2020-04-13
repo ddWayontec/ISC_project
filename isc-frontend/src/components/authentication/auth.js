@@ -69,8 +69,6 @@ export const Auth = ({ children }) => {
       }
     });
 
-    console.log(`Response status: ${JSON.stringify(response)}`);
-
     //make a request to block chain
     const data = response;
 

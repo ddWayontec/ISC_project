@@ -21,7 +21,7 @@ import { requestUserByEmail } from "../../utils/request-user-by-email";
 import { statusIsTrue } from "../../utils/status-is-true";
 import { submitCreateEmployee } from "./submit-create-employee";
 
-const useStyles = makeStyles(({ spacing }) => ({
+const useStyles = makeStyles(() => ({
   form: {
     width: "100%" // Fix IE 11 issue.
   }
@@ -68,7 +68,6 @@ export const EmployeeForm = ({
         setDefaultValues(cleanedData);
       }
 
-      console.log(`user data/: ${JSON.stringify(response)}`);
       setLoading(false);
     };
 

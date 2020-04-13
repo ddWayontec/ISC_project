@@ -12,24 +12,17 @@ import {
 import MuiAlert from "@material-ui/lab/Alert";
 import { DatePicker } from "@material-ui/pickers";
 import get from "lodash/get";
-import noop from "lodash/noop";
 import orderBy from "lodash/orderBy";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useParams } from "react-router-dom";
 
 import { useBasicImmigrantInfoWithState } from "../../hooks/use-basic-immigrant-info-with-state";
-import {
-  CREATE_RESULTS_DATA,
-  GET_IMMIGRANT_RESULTS_BY_PR_DATA,
-  URLS
-} from "../../utils/constants";
+import { GET_IMMIGRANT_RESULTS_BY_PR_DATA, URLS } from "../../utils/constants";
 import { request } from "../../utils/request";
 import { statusIsTrue } from "../../utils/status-is-true";
 import { BlockchainVerified } from "../blockchain-verified";
 import { ContentWrapper } from "../content-wrapper";
-import { FormPage } from "../form-page";
 import { Header } from "../header";
 import { LoadingIcon } from "../loading-icon";
 import { RecommendationCard } from "../recommendation-card";
@@ -115,7 +108,6 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
   }, [register]);
 
   const [defaultValues, setDefaultValues] = useState({});
-  console.log(defaultValues);
   const [dateOfAssessment, setDateOfAssessment] = useState(
     defaultValues ? defaultValues.dateOfAssessment : new Date()
   );
@@ -157,10 +149,7 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
         }
       });
 
-      console.log(`Response: ${JSON.stringify(response)}`);
-
       if (statusIsTrue(response)) {
-        console.log(`Results ${JSON.stringify(response)}`);
         const sortedResults = orderBy(
           response.Extra,
           result => {
@@ -236,12 +225,6 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
         setDateOfAssessment(cleanedData.assessmentDate);
         setFullTimeEducation(cleanedData.fullTimeEducation);
         setTransactionId(get(result, "UUID"));
-
-        console.log(
-          `Sorted results ${JSON.stringify(
-            sortedResults
-          )} cleaned data: ${JSON.stringify(cleanedData)}`
-        );
       }
 
       setLoading(false);
@@ -251,7 +234,6 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
     }
   }, []);
 
-  console.log(`defaultValues ${JSON.stringify(defaultValues)}`);
   return !isLoading ? (
     <ContentWrapper>
       <Header title="English Language Module Results" />
@@ -287,13 +269,7 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
                 </Grid>
               </Grid>
               <ResultsTable
-                enableEditing={enableEditing}
                 disabled={disabled}
-                setDisabled={setDisabled}
-                handleSave={() => {
-                  console.log("save");
-                  setDisabled(false);
-                }}
                 register={register}
                 setValue={setValue}
                 defaultValues={defaultValues}

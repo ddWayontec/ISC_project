@@ -1,27 +1,13 @@
 import {
-  Button,
-  makeStyles,
   MenuItem,
   Select,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
-  TextField
+  TableRow
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { Controller } from "react-hook-form";
-
-const useStyles = makeStyles(({ spacing }) => ({
-  buttonWrapper: {
-    marginTop: spacing(4),
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "baseline",
-    float: "right"
-  }
-}));
 
 const scoreOptions = [
   "Pre-B",

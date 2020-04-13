@@ -59,7 +59,6 @@ export const Login = ({ redirectPath }) => {
     const { email, password } = data;
 
     const loginResult = await initiateLogin(email, password);
-    console.log(`Login result: ${JSON.stringify(loginResult)}`);
 
     if (loginResult && !isEmpty(loginResult)) {
       if (!loginResult.authenticated) {
@@ -72,7 +71,6 @@ export const Login = ({ redirectPath }) => {
 
     setLoading(false);
   };
-  console.log(`redirect path: ${redirectPath}`);
 
   return (
     <Container component="main" maxWidth="xs">

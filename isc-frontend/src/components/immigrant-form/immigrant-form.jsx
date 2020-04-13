@@ -80,7 +80,6 @@ export const ImmigrantForm = ({
         setSelectedDOB(cleanedData.dob);
       }
 
-      console.log(`user data/: ${JSON.stringify(response)}`);
       setLoading(false);
     };
 
