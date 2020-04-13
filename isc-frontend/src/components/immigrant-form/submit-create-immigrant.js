@@ -1,4 +1,4 @@
-import { CREATE_IMMIGRANT } from "../../utils/constants";
+import { CREATE_IMMIGRANT, URLS } from "../../utils/constants";
 import { request } from "../../utils/request";
 import { statusIsTrue } from "../../utils/status-is-true";
 
@@ -12,7 +12,7 @@ export const submitCreateImmigrant = async ({
 
   console.log(`form data: ${JSON.stringify(formData)}`);
 
-  const responseData = await request("/kc/api/ledgerChainCode/addAndMapUser", {
+  const responseData = await request(URLS.addAndMapUser, {
     method: "post",
     data: {
       ...CREATE_IMMIGRANT.addAndMapUser,
@@ -36,27 +36,24 @@ export const submitCreateImmigrant = async ({
 
   console.log(`Response data: ${JSON.stringify(responseData)}`);
   if (statusIsTrue(responseData)) {
-    const sendMessageResponse = await request(
-      "/kc/api/ledgerChainCode/sendMessage",
-      {
-        method: "post",
-        data: {
-          ...CREATE_IMMIGRANT.sendMessage,
-          Receiver: { ID: formData.email, MSPID: "Org1MSP" },
-          Payload: {
-            ...CREATE_IMMIGRANT.sendMessage.Payload,
-            DoA: { format: "02-01-2006", value: formData.doa.toString() },
-            DoB: { format: "02-01-2006", value: formData.dob.toString() },
-            Email: formData.email,
-            FirstName: formData.firstName,
-            LastName: formData.lastName,
-            PRNo: formData.prNo,
-            Password: formData.password,
-            TelephoneNo: formData.phone
-          }
+    const sendMessageResponse = await request(URLS.sendMessage, {
+      method: "post",
+      data: {
+        ...CREATE_IMMIGRANT.sendMessage,
+        Receiver: { ID: formData.email, MSPID: "Org1MSP" },
+        Payload: {
+          ...CREATE_IMMIGRANT.sendMessage.Payload,
+          DoA: { format: "02-01-2006", value: formData.doa.toString() },
+          DoB: { format: "02-01-2006", value: formData.dob.toString() },
+          Email: formData.email,
+          FirstName: formData.firstName,
+          LastName: formData.lastName,
+          PRNo: formData.prNo,
+          Password: formData.password,
+          TelephoneNo: formData.phone
         }
       }
-    );
+    });
 
     console.log(
       `send message response data: ${JSON.stringify(sendMessageResponse)}`

@@ -36,8 +36,8 @@ export const BlockchainVerified = ({ hash }) => {
         <div className={classes.verifiedWrapper}>
           <CheckCircleOutlineIcon className={classes.icon} />
           <Typography variant="h6">
-            <span style={{ color: "green" }}>Verified</span> with blockchain
-            hash: <span className={classes.hashText}>{hash}</span>
+            <span style={{ color: "green" }}>Verified</span> with blockchain id:{" "}
+            <span className={classes.hashText}>{hash}</span>
           </Typography>
         </div>
       </CardContent>

@@ -100,6 +100,23 @@ export const GET_ISC_EMPLOYEE_BY_EMAIL_DATA = {
   sm_pwd: "123456"
 };
 
+export const GET_IMMIGRANT_RESULTS_BY_PR_DATA = {
+  ...GET_IMMIGRANT_DATA,
+  StructureId: "getimmigrantresults"
+};
+
+export const CREATE_RESULTS_DATA = {
+  ...BASE_REQUEST_DATA.uppercaseKeys,
+  sender: {
+    ID: "isc1",
+    MSPID: "Org1MSP"
+  },
+  StructureId: "addresults",
+  sm_uid: "isc1",
+  sm_pwd: "123456"
+};
 export const URLS = {
-  requestReport: "/kc/api/ledgerChainCode/requestReport"
+  requestReport: "/kc/api/ledgerChainCode/requestReport",
+  addAndMapUser: "/kc/api/ledgerChainCode/addAndMapUser",
+  sendMessage: "/kc/api/ledgerChainCode/sendMessage"
 };

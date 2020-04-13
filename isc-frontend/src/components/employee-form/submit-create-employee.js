@@ -1,4 +1,4 @@
-import { CREATE_ISC_EMPLOYEE_DATA } from "../../utils/constants";
+import { CREATE_ISC_EMPLOYEE_DATA, URLS } from "../../utils/constants";
 import { request } from "../../utils/request";
 import { statusIsTrue } from "../../utils/status-is-true";
 
@@ -10,7 +10,7 @@ export const submitCreateEmployee = async ({
 }) => {
   setLoading(true);
 
-  const responseData = await request("/kc/api/ledgerChainCode/addAndMapUser", {
+  const responseData = await request(URLS.addAndMapUser, {
     method: "post",
     data: {
       ...CREATE_ISC_EMPLOYEE_DATA.addAndMapUser,
@@ -32,29 +32,26 @@ export const submitCreateEmployee = async ({
   });
 
   if (statusIsTrue(responseData)) {
-    const sendMessageResponse = await request(
-      "/kc/api/ledgerChainCode/sendMessage",
-      {
-        method: "post",
-        data: {
-          ...CREATE_ISC_EMPLOYEE_DATA.sendMessage,
-          Receiver: {
-            ID: formData.email,
-            MSPID: "Org1MSP"
-          },
-          Payload: {
-            ...CREATE_ISC_EMPLOYEE_DATA.sendMessage.Payload,
-            Email: formData.email,
-            EmployeeID: formData.id,
-            FirstLanguage: formData.firstLanguage,
-            FirstNameEmp: formData.firstName,
-            LastNameEmp: formData.lastName,
-            Password: formData.password,
-            TelephoneNo: formData.phone
-          }
+    const sendMessageResponse = await request(URLS.sendMessage, {
+      method: "post",
+      data: {
+        ...CREATE_ISC_EMPLOYEE_DATA.sendMessage,
+        Receiver: {
+          ID: formData.email,
+          MSPID: "Org1MSP"
+        },
+        Payload: {
+          ...CREATE_ISC_EMPLOYEE_DATA.sendMessage.Payload,
+          Email: formData.email,
+          EmployeeID: formData.id,
+          FirstLanguage: formData.firstLanguage,
+          FirstNameEmp: formData.firstName,
+          LastNameEmp: formData.lastName,
+          Password: formData.password,
+          TelephoneNo: formData.phone
         }
       }
-    );
+    });
 
     if (statusIsTrue(sendMessageResponse)) {
       setLoading(false);

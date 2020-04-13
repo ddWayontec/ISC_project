@@ -40,25 +40,15 @@ const scoreOptions = [
 const ScoreDropdown = ({ id, name, value, disabled, setValue }) => {
   const [val, setVal] = useState(value);
   setValue(name, val);
+
+  useEffect(() => setVal(value), [value]);
   return (
-    // <TextField
-    //   id={id}
-    //   name={name}
-    //   select
-    //   fullWidth
-    //   value={val}
-    //   onChange={e => setVal(e.target.value)}
-    //   size="small"
-    //   disabled={disabled}
-    //   inputRef={register()}
-    // >
     <Select
       value={val}
       id={id}
       disabled={disabled}
       onChange={e => {
         setVal(e.target.value);
-        // setValue(name, e.target.value);
       }}
     >
       {scoreOptions.map(option => (
@@ -67,20 +57,15 @@ const ScoreDropdown = ({ id, name, value, disabled, setValue }) => {
         </MenuItem>
       ))}
     </Select>
-    // </TextField>
   );
 };
 
 export const ResultsTable = ({
-  enableEditing,
   disabled,
   register,
   setValue,
-  setDisabled,
-  handleSave
+  defaultValues
 }) => {
-  const classes = useStyles();
-
   return (
     <>
       <Table size="small">
@@ -98,7 +83,7 @@ export const ResultsTable = ({
               <ScoreDropdown
                 id="listeningBenchmark"
                 name="listeningBenchmark"
-                value="2"
+                value={defaultValues.listeningBenchmark}
                 disabled={disabled}
                 register={register}
                 setValue={setValue}
@@ -108,7 +93,7 @@ export const ResultsTable = ({
               <ScoreDropdown
                 id="listeningResult"
                 name="listeningResult"
-                value="2"
+                value={defaultValues.listeningResult}
                 disabled={disabled}
                 register={register}
                 setValue={setValue}
@@ -121,7 +106,7 @@ export const ResultsTable = ({
               <ScoreDropdown
                 id="speakingBenchmark"
                 name="speakingBenchmark"
-                value="2"
+                value={defaultValues.speakingBenchmark}
                 disabled={disabled}
                 register={register}
                 setValue={setValue}
@@ -131,7 +116,7 @@ export const ResultsTable = ({
               <ScoreDropdown
                 id="speakingResult"
                 name="speakingResult"
-                value="2"
+                value={defaultValues.speakingResult}
                 disabled={disabled}
                 register={register}
                 setValue={setValue}
@@ -144,7 +129,7 @@ export const ResultsTable = ({
               <ScoreDropdown
                 id="readingBenchmark"
                 name="readingBenchmark"
-                value="2"
+                value={defaultValues.readingBenchmark}
                 disabled={disabled}
                 register={register}
                 setValue={setValue}
@@ -154,7 +139,7 @@ export const ResultsTable = ({
               <ScoreDropdown
                 id="readingResult"
                 name="readingResult"
-                value="2"
+                value={defaultValues.readingResult}
                 disabled={disabled}
                 register={register}
                 setValue={setValue}
@@ -167,7 +152,7 @@ export const ResultsTable = ({
               <ScoreDropdown
                 id="writingBenchmark"
                 name="writingBenchmark"
-                value="2"
+                value={defaultValues.writingBenchmark}
                 disabled={disabled}
                 register={register}
                 setValue={setValue}
@@ -177,7 +162,7 @@ export const ResultsTable = ({
               <ScoreDropdown
                 id="writingResult"
                 name="writingResult"
-                value="Pre-B"
+                value={defaultValues.writingResult}
                 disabled={disabled}
                 register={register}
                 setValue={setValue}
