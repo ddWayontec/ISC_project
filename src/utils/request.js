@@ -1,13 +1,19 @@
 import axios from "axios";
 
+const proxyUrl = "https://isc-krypc-proxy.herokuapp.com/blockchain";
+
 export const request = async (url, options) => {
-  const { headers = {} } = options;
+  const { headers = {}, data } = options;
 
   const response = await axios({
-    url,
-    ...options,
+    url: proxyUrl,
+    method: "post",
+    data: {
+      ...data,
+      krypcUrl: url
+    },
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded'",
+      "Content-Type": "application/json",
       ...headers
     }
   });
