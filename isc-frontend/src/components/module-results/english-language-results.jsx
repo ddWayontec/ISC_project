@@ -323,7 +323,7 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
             </Grid>
             <Grid item xs={12}>
               <>
-                {disabled && hash ? (
+                {disabled && transactionId ? (
                   <BlockchainVerified hash={transactionId} />
                 ) : null}
                 {enableEditing ? (

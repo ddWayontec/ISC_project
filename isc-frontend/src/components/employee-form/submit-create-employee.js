@@ -1,3 +1,5 @@
+import trim from "lodash/trim";
+
 import { CREATE_ISC_EMPLOYEE_DATA, URLS } from "../../utils/constants";
 import { request } from "../../utils/request";
 import { statusIsTrue } from "../../utils/status-is-true";
@@ -14,17 +16,17 @@ export const submitCreateEmployee = async ({
     method: "post",
     data: {
       ...CREATE_ISC_EMPLOYEE_DATA.addAndMapUser,
-      id: formData.email,
-      email: formData.email,
-      EmployeeID: formData.id,
-      mobile_no: formData.phone,
-      first_name: formData.firstName,
-      FirstLanguage: formData.firstLanguage,
-      last_name: formData.lastName,
+      id: trim(formData.email),
+      email: trim(formData.email),
+      EmployeeID: trim(formData.id),
+      mobile_no: trim(formData.phone),
+      first_name: trim(formData.firstName),
+      FirstLanguage: trim(formData.firstLanguage),
+      last_name: trim(formData.lastName),
       password: formData.password,
       proposedUser: [
         {
-          ID: formData.email,
+          ID: trim(formData.email),
           MSPID: "Org1MSP"
         }
       ]
@@ -42,13 +44,13 @@ export const submitCreateEmployee = async ({
         },
         Payload: {
           ...CREATE_ISC_EMPLOYEE_DATA.sendMessage.Payload,
-          Email: formData.email,
-          EmployeeID: formData.id,
-          FirstLanguage: formData.firstLanguage,
-          FirstNameEmp: formData.firstName,
-          LastNameEmp: formData.lastName,
+          Email: trim(formData.email),
+          EmployeeID: trim(formData.id),
+          FirstLanguage: trim(formData.firstLanguage),
+          FirstNameEmp: trim(formData.firstName),
+          LastNameEmp: trim(formData.lastName),
           Password: formData.password,
-          TelephoneNo: formData.phone
+          TelephoneNo: trim(formData.phone)
         }
       }
     });

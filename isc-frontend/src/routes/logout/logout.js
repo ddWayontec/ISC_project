@@ -1,10 +1,22 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 
 import { AuthContext } from "../../contexts/auth";
 
 export const Logout = () => {
   const { logout } = useContext(AuthContext);
-  useEffect(() => logout(), []);
+  const [redirect, setRedirect] = useState(false);
+  useEffect(() => {
+    // log out and redirecting to homepage soon
+    logout();
+    setTimeout(() => setRedirect(true), 5000);
+  }, []);
 
-  return <div>Logged Out</div>;
+  return redirect ? (
+    <Redirect to="/login" />
+  ) : (
+    <div>
+      Logged Out. You will be redirected to the login page in 5 seconds.
+    </div>
+  );
 };

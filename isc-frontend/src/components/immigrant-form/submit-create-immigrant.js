@@ -1,3 +1,5 @@
+import trim from "lodash/trim";
+
 import { CREATE_IMMIGRANT, URLS } from "../../utils/constants";
 import { request } from "../../utils/request";
 import { statusIsTrue } from "../../utils/status-is-true";
@@ -10,54 +12,47 @@ export const submitCreateImmigrant = async ({
 }) => {
   setLoading(true);
 
-  console.log(`form data: ${JSON.stringify(formData)}`);
-
   const responseData = await request(URLS.addAndMapUser, {
     method: "post",
     data: {
       ...CREATE_IMMIGRANT.addAndMapUser,
-      id: formData.email,
+      id: trim(formData.email),
       DoA: { format: "02-01-2006", value: formData.doa.toString() },
       DoB: { format: "02-01-2006", value: formData.dob.toString() },
-      email: formData.email,
+      email: trim(formData.email),
       mobile_no: formData.phone,
-      first_name: formData.firstName,
-      last_name: formData.lastName,
+      first_name: trim(formData.firstName),
+      last_name: trim(formData.lastName),
       password: formData.password,
-      PRNo: formData.prNo,
+      PRNo: trim(formData.prNo),
       proposedUser: [
         {
-          ID: formData.email,
+          ID: trim(formData.email),
           MSPID: "Org1MSP"
         }
       ]
     }
   });
 
-  console.log(`Response data: ${JSON.stringify(responseData)}`);
   if (statusIsTrue(responseData)) {
     const sendMessageResponse = await request(URLS.sendMessage, {
       method: "post",
       data: {
         ...CREATE_IMMIGRANT.sendMessage,
-        Receiver: { ID: formData.email, MSPID: "Org1MSP" },
+        Receiver: { ID: trim(formData.email), MSPID: "Org1MSP" },
         Payload: {
           ...CREATE_IMMIGRANT.sendMessage.Payload,
           DoA: { format: "02-01-2006", value: formData.doa.toString() },
           DoB: { format: "02-01-2006", value: formData.dob.toString() },
-          Email: formData.email,
-          FirstName: formData.firstName,
-          LastName: formData.lastName,
-          PRNo: formData.prNo,
+          Email: trim(formData.email),
+          FirstName: trim(formData.firstName),
+          LastName: trim(formData.lastName),
+          PRNo: trim(formData.prNo),
           Password: formData.password,
           TelephoneNo: formData.phone
         }
       }
     });
-
-    console.log(
-      `send message response data: ${JSON.stringify(sendMessageResponse)}`
-    );
 
     if (statusIsTrue(sendMessageResponse)) {
       setLoading(false);

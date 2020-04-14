@@ -1,5 +1,6 @@
 import get from "lodash/get";
 import toNumber from "lodash/toNumber";
+import trim from "lodash/trim";
 
 import { CREATE_RESULTS_DATA, URLS } from "../../utils/constants";
 import { request } from "../../utils/request";
@@ -14,7 +15,6 @@ export const submitCreateResults = async ({
   setErrorSnackbarOpen,
   setTransactionId
 }) => {
-  console.log(`Form Data: ${JSON.stringify(formData)}`);
   setLoading(true);
 
   const response = await request(URLS.sendMessage, {
@@ -33,29 +33,27 @@ export const submitCreateResults = async ({
           value: formData.dateOfAssessment
         },
         EdYrs: toNumber(formData.yearsOfEducation),
-        FirstName: userData.firstName,
+        FirstName: trim(userData.firstName),
         FullTime: formData.fullTimeEducation,
-        LastName: userData.lastName,
-        ListeningBM: formData.listeningBenchmark,
-        ListeningScore: formData.listeningResult,
-        PRNo: userData.prNo,
-        ReadingBM: formData.readingBenchmark,
-        ReadingScore: formData.readingResult,
-        Rec1Inst: formData.schoolRecommendationA,
-        Rec1Program: formData.programRecommendationA,
-        Rec2Inst: formData.schoolRecommendationB,
-        Rec2Program: formData.programRecommendationB,
-        SpeakingBM: formData.speakingBenchmark,
-        SpeakingScore: formData.speakingResult,
-        WritingBM: formData.writingBenchmark,
-        WritingScore: formData.writingResult,
+        LastName: trim(userData.lastName),
+        ListeningBM: trim(formData.listeningBenchmark),
+        ListeningScore: trim(formData.listeningResult),
+        PRNo: trim(userData.prNo),
+        ReadingBM: trim(formData.readingBenchmark),
+        ReadingScore: trim(formData.readingResult),
+        Rec1Inst: trim(formData.schoolRecommendationA),
+        Rec1Program: trim(formData.programRecommendationA),
+        Rec2Inst: trim(formData.schoolRecommendationB),
+        Rec2Program: trim(formData.programRecommendationB),
+        SpeakingBM: trim(formData.speakingBenchmark),
+        SpeakingScore: trim(formData.speakingResult),
+        WritingBM: trim(formData.writingBenchmark),
+        WritingScore: trim(formData.writingResult),
         timeAssessed: new Date().toISOString(),
         isValid: true
       }
     }
   });
-
-  console.log(`Creating result ${JSON.stringify(response)}`);
 
   let transactionId = null;
   if (statusIsTrue(response)) {
@@ -63,6 +61,7 @@ export const submitCreateResults = async ({
     transactionId = get(response, "Extra");
   } else {
     setErrorSnackbarOpen(true);
+    console.error(response);
   }
 
   setTransactionId(transactionId);
