@@ -1,0 +1,1 @@
+export { Immigrants } from "./immigrants";
