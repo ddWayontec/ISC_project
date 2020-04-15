@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 
-const scoreOptions = [
+const listeningSpeakingOptions = [
   "Pre-B",
   "1",
   "2",
@@ -19,11 +19,38 @@ const scoreOptions = [
   "6",
   "7",
   "8",
-  "NA",
-  "IE"
+  "0",
+  "10+"
 ];
 
-const ScoreDropdown = ({ id, name, value, disabled, setValue }) => {
+const writingReadingOptions = [
+  "PFL",
+  "FL",
+  "L1",
+  "L2",
+  "L3",
+  "L4",
+  "Pre-B",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "0",
+  "10+"
+];
+
+const ScoreDropdown = ({
+  id,
+  name,
+  value,
+  disabled,
+  setValue,
+  scoreOptions
+}) => {
   const [val, setVal] = useState(value);
   setValue(name, val);
 
@@ -58,14 +85,13 @@ export const ResultsTable = ({
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Benchmark</TableCell>
-            <TableCell>Result Source</TableCell>
+            <TableCell align="right">Benchmark</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
             <TableCell>Listening</TableCell>
-            <TableCell name="cell1">
+            <TableCell align="right" name="cell1">
               <ScoreDropdown
                 id="listeningBenchmark"
                 name="listeningBenchmark"
@@ -73,22 +99,13 @@ export const ResultsTable = ({
                 disabled={disabled}
                 register={register}
                 setValue={setValue}
-              />
-            </TableCell>
-            <TableCell>
-              <ScoreDropdown
-                id="listeningResult"
-                name="listeningResult"
-                value={defaultValues.listeningResult}
-                disabled={disabled}
-                register={register}
-                setValue={setValue}
+                scoreOptions={listeningSpeakingOptions}
               />
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Speaking</TableCell>
-            <TableCell>
+            <TableCell align="right">
               <ScoreDropdown
                 id="speakingBenchmark"
                 name="speakingBenchmark"
@@ -96,22 +113,13 @@ export const ResultsTable = ({
                 disabled={disabled}
                 register={register}
                 setValue={setValue}
-              />
-            </TableCell>
-            <TableCell>
-              <ScoreDropdown
-                id="speakingResult"
-                name="speakingResult"
-                value={defaultValues.speakingResult}
-                disabled={disabled}
-                register={register}
-                setValue={setValue}
+                scoreOptions={listeningSpeakingOptions}
               />
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Reading</TableCell>
-            <TableCell>
+            <TableCell align="right">
               <ScoreDropdown
                 id="readingBenchmark"
                 name="readingBenchmark"
@@ -119,22 +127,13 @@ export const ResultsTable = ({
                 disabled={disabled}
                 register={register}
                 setValue={setValue}
-              />
-            </TableCell>
-            <TableCell>
-              <ScoreDropdown
-                id="readingResult"
-                name="readingResult"
-                value={defaultValues.readingResult}
-                disabled={disabled}
-                register={register}
-                setValue={setValue}
+                scoreOptions={writingReadingOptions}
               />
             </TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Writing</TableCell>
-            <TableCell>
+            <TableCell align="right">
               <ScoreDropdown
                 id="writingBenchmark"
                 name="writingBenchmark"
@@ -142,16 +141,7 @@ export const ResultsTable = ({
                 disabled={disabled}
                 register={register}
                 setValue={setValue}
-              />
-            </TableCell>
-            <TableCell>
-              <ScoreDropdown
-                id="writingResult"
-                name="writingResult"
-                value={defaultValues.writingResult}
-                disabled={disabled}
-                register={register}
-                setValue={setValue}
+                scoreOptions={writingReadingOptions}
               />
             </TableCell>
           </TableRow>
