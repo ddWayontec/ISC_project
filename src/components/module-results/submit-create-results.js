@@ -37,19 +37,16 @@ export const submitCreateResults = async ({
         FullTime: formData.fullTimeEducation,
         LastName: trim(userData.lastName),
         ListeningBM: trim(formData.listeningBenchmark),
-        ListeningScore: trim(formData.listeningResult),
         PRNo: trim(userData.prNo),
         ReadingBM: trim(formData.readingBenchmark),
-        ReadingScore: trim(formData.readingResult),
         Rec1Inst: trim(formData.schoolRecommendationA),
         Rec1Program: trim(formData.programRecommendationA),
         Rec2Inst: trim(formData.schoolRecommendationB),
         Rec2Program: trim(formData.programRecommendationB),
         SpeakingBM: trim(formData.speakingBenchmark),
-        SpeakingScore: trim(formData.speakingResult),
         WritingBM: trim(formData.writingBenchmark),
-        WritingScore: trim(formData.writingResult),
         timeAssessed: new Date().toISOString(),
+        testType: trim(formData.assessmentTool),
         isValid: true
       }
     }

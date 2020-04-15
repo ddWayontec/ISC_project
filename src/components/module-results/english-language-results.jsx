@@ -97,14 +97,11 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
   useEffect(() => {
     register({ name: "test" });
     register({ name: "listeningBenchmark" });
-    register({ name: "listeningResult" });
     register({ name: "speakingBenchmark" });
-    register({ name: "speakingResult" });
     register({ name: "readingBenchmark" });
-    register({ name: "readingResult" });
     register({ name: "writingBenchmark" });
-    register({ name: "writingResult" });
     register({ name: "fullTimeEducation" });
+    register({ name: "assessmentTool" });
   }, [register]);
 
   const [defaultValues, setDefaultValues] = useState({});
@@ -116,6 +113,11 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
     defaultValues ? defaultValues.fullTimeEducation : false
   );
   setValue("fullTimeEducation", fullTimeEducation);
+
+  const [assessmentTool, setAssessmentTool] = useState(
+    defaultValues ? defaultValues.assessmentTool : false
+  );
+  setValue("assessmentTool", assessmentTool);
 
   const onSubmit = async formData => {
     setDefaultValues({ ...formData });
@@ -131,9 +133,6 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
 
     setDisabled(true);
   };
-
-  // mocking
-  const hash = "some-mock-hash";
 
   // fetch results if exist
   useEffect(() => {
@@ -166,6 +165,7 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
             result,
             "mapsByNameAndFieldValue.AssessmentDate.value.value"
           ),
+          assessmentTool: get(result, "mapsByNameAndFieldValue.testType.value"),
           yearsOfEducation: get(result, "mapsByNameAndFieldValue.EdYrs.value"),
           fullTimeEducation: get(
             result,
@@ -175,33 +175,17 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
             result,
             "mapsByNameAndFieldValue.ListeningBM.value"
           ),
-          listeningResult: get(
-            result,
-            "mapsByNameAndFieldValue.ListeningScore.value"
-          ),
           speakingBenchmark: get(
             result,
             "mapsByNameAndFieldValue.SpeakingBM.value"
-          ),
-          speakingResult: get(
-            result,
-            "mapsByNameAndFieldValue.SpeakingScore.value"
           ),
           readingBenchmark: get(
             result,
             "mapsByNameAndFieldValue.ReadingBM.value"
           ),
-          readingResult: get(
-            result,
-            "mapsByNameAndFieldValue.ReadingScore.value"
-          ),
           writingBenchmark: get(
             result,
             "mapsByNameAndFieldValue.WritingBM.value"
-          ),
-          writingResult: get(
-            result,
-            "mapsByNameAndFieldValue.WritingScore.value"
           ),
           schoolRecommendationA: get(
             result,
@@ -224,6 +208,7 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
         setDefaultValues(cleanedData);
         setDateOfAssessment(cleanedData.assessmentDate);
         setFullTimeEducation(cleanedData.fullTimeEducation);
+        setAssessmentTool(cleanedData.assessmentTool);
         setTransactionId(get(result, "UUID"));
       }
 
@@ -248,6 +233,31 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
                 {userData.firstName} {userData.lastName}
               </Typography>
               <Typography>PR #: {userData.prNo}</Typography>
+              <div className={classes.education}>
+                <Typography>Assessment Tool</Typography>
+                <Select
+                  value={assessmentTool}
+                  disabled={disabled}
+                  className={classes.fullTimeDD}
+                  onChange={e => setAssessmentTool(e.target.value)}
+                >
+                  <MenuItem key="CLBPT" value="CLBPT">
+                    CLBPT
+                  </MenuItem>
+                  <MenuItem key="CLBA" value="CLBA">
+                    CLBA
+                  </MenuItem>
+                  <MenuItem key="CLB-LPT" value="CLB-LPT">
+                    CLB-LPT
+                  </MenuItem>
+                  <MenuItem key="CLB-LL" value="CLB-LL">
+                    CLB-LL
+                  </MenuItem>
+                  <MenuItem key="ELTPA" value="ELTPA">
+                    ELTPA
+                  </MenuItem>
+                </Select>
+              </div>
               <Grid container>
                 <Grid item xs={6}>
                   <Typography className={classes.section}>
@@ -347,7 +357,6 @@ export const EnglishLanguageResults = ({ history, enableEditing = false }) => {
                       variant="contained"
                       color="primary"
                       disabled={disabled}
-                      // onClick={() => setDisabled(true)}
                     >
                       Save
                     </Button>
