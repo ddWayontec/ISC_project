@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const proxyUrl = "https://isc-krypc-proxy.herokuapp.com/blockchain";
+const proxyUrl =
+  process.env.REACT_APP_BLOCKCHAIN_URL || "http://localhost:3006/blockchain";
 
 export const request = async (url, options) => {
   const { headers = {}, data } = options;
