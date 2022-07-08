@@ -15,7 +15,7 @@
     "axios": "^0.19.2",
     "lodash": "^4.17.15",
     "material-table": "^1.57.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-hook-form": "^5.1.3",
